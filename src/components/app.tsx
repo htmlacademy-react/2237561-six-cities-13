@@ -1,13 +1,11 @@
-import MainScreen from '../pages/main-screen/main';
+import MainScreen from '../pages/main/main';
 
 type AppScreenProps = {
-  citiesCardsCount: number;
-}
+  offersCount: number;
+};
 
-function App({citiesCardsCount}: AppScreenProps): JSX.Element {
-  return (
-    <MainScreen citiesCardsCount= {citiesCardsCount} />
-  );
+function App({ offersCount }: AppScreenProps): JSX.Element {
+  return <MainScreen offersCount={offersCount} />;
 }
 
 export default App;

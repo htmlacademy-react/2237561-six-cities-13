@@ -1,3 +1,3 @@
 export const Setting = {
-  CitiesCardsCount: 312
+  OffersCount: 312,
 } as const;
