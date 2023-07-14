@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
+import { AppRoute } from '../../const';
+import styles from './not-found.module.css';
 
 function NotFoundScreen(): JSX.Element {
   return (
     <div className="page not-found">
-      <header className="header">
-        <div className="container">
-          <div className="header__wrapper">
-            <div className="header__left"></div>
-          </div>
-        </div>
-      </header>
+      <Helmet>
+        <title>6 cities not found</title>
+      </Helmet>
       <main className="page main--not-found">
         <div className="page not-found-container container">
           <section className="page not-found">
@@ -20,16 +19,18 @@ function NotFoundScreen(): JSX.Element {
                 alt="6 cities not found"
                 width="100%"
                 height="100%"
-                style={{ textAlign: 'center', marginTop: '10%' }}
+                style={{ textAlign: 'center', marginTop: '15%' }}
               />
-              <Link to="/">
-                <h1 style={{ textAlign: 'center' }}>Вернуться на главную</h1>
-              </Link>
+              <p className = {styles.text}>
+                Вернуться на {' '}
+                <Link to={AppRoute.Main} className={styles.link}>
+                главную
+                </Link>
+              </p>
             </div>
           </section>
         </div>
       </main>
-      <footer className="footer"></footer>
     </div>
   );
 }
