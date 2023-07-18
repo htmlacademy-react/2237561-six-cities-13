@@ -1,4 +1,4 @@
-import {Helmet} from 'react-helmet-async';
+import { Helmet } from 'react-helmet-async';
 import CitiesCard from '../../components/cities-card/card';
 import { TOffer } from '../../types/offer';
 
@@ -124,11 +124,11 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 </ul>
               </form>
               <div className="cities__places-list places__list tabs__content">
-                <CitiesCard offer={offers[0]}/>
-                <CitiesCard offer={offers[1]}/>
-                <CitiesCard offer={offers[2]}/>
-                <CitiesCard offer={offers[3]}/>
-                <CitiesCard offer={offers[4]}/>
+                <CitiesCard offer={offers[0]} />
+                <CitiesCard offer={offers[1]} />
+                <CitiesCard offer={offers[2]} />
+                <CitiesCard offer={offers[3]} />
+                <CitiesCard offer={offers[4]} />
               </div>
             </section>
             <div className="cities__right-section">

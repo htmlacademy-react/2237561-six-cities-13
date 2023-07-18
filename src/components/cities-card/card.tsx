@@ -1,3 +1,4 @@
+//import {useState} from 'react';
 import { TOffer } from '../../types/offer';
 
 type CitiesCardProps = {
@@ -43,7 +44,7 @@ function CitiesCard({offer}: CitiesCardProps): JSX.Element {
         <h2 className="place-card__name">
           <a href="#">{offer.title}</a>
         </h2>
-        <p className="place-card__type">Apartment</p>
+        <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
