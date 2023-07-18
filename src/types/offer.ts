@@ -1,20 +1,20 @@
-export type TOffer =
-{
+export type TOffer = {
   id: string;
   title: string;
   type: string;
   price: number;
   city: {
-  name: string;
+    name: string;
+    location: {
+      latitude: number;
+      longitude: number;
+      zoom: number;
+    };
+  };
   location: {
-  latitude: number;
-  longitude: number;
-  zoom: number;
-  };};
-  location: {
-  latitude: number;
-  longitude: number;
-  zoom: number;
+    latitude: number;
+    longitude: number;
+    zoom: number;
   };
   isFavorite: boolean;
   isPremium: boolean;
@@ -23,10 +23,10 @@ export type TOffer =
   bedrooms: number;
   goods: string[];
   host: {
-  name: string;
-  avatarUrl: string;
-  isPro: boolean;
+    name: string;
+    avatarUrl: string;
+    isPro: boolean;
   };
   images: string[];
   maxAdults: number;
-  }
+};
