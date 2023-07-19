@@ -1,11 +1,10 @@
-//import {useState} from 'react';
 import { TOffer } from '../../types/offer';
 
-type CitiesCardProps = {
+type TCitiesCardProps = {
   offer: TOffer;
 }
 
-function CitiesCard({offer}: CitiesCardProps): JSX.Element {
+function CitiesCard({offer}: TCitiesCardProps): JSX.Element {
   return (
     <article className="cities__card place-card">
       <div className="place-card__mark">
@@ -15,7 +14,7 @@ function CitiesCard({offer}: CitiesCardProps): JSX.Element {
         <a href="#">
           <img
             className="place-card__image"
-            src={offer.images[0]}
+            src={offer.previewImage}
             width="260"
             height="200"
             alt="Place image"
