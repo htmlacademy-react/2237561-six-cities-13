@@ -3,15 +3,15 @@ import {HelmetProvider} from 'react-helmet-async';
 import { AppRoute, AuthorizationStatus } from '../const';
 import MainScreen from '../pages/main/main';
 import LoginScreen from '../pages/login/login';
-import Favorites from '../pages/favorites/favorites';
+import FavoritesPage from '../pages/favorites/favorites';
 import Offer from '../pages/offer/offer';
 import NotFoundScreen from '../pages/not-found/not-found';
 import PrivateRoute from './private-route/private-route';
-import {TOffer} from '../types/offer';
+import {TOffers} from '../types/offer';
 
 type AppScreenProps = {
   offersCount: number;
-  offers: TOffer[];
+  offers: TOffers;
 };
 
 function App({ offersCount, offers }: AppScreenProps): JSX.Element {
@@ -27,8 +27,8 @@ function App({ offersCount, offers }: AppScreenProps): JSX.Element {
           <Route
             path={AppRoute.Favorites}
             element={
-              <PrivateRoute authorizationStatus={AuthorizationStatus.NoAuth}>
-                <Favorites />
+              <PrivateRoute authorizationStatus={AuthorizationStatus.Auth}>
+                <FavoritesPage offers={offers}/>
               </PrivateRoute>
             }
           />

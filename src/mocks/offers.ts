@@ -215,17 +215,17 @@ export const offersList = [
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
-        zoom: 13
-      }
+        zoom: 13,
+      },
     },
     location: {
       latitude: 51.250402,
       longitude: 6.7853140000000005,
-      zoom: 16
+      zoom: 16,
     },
     isFavorite: false,
     isPremium: false,
-    rating: 2.4
+    rating: 2.4,
   },
   {
     id: '7bde3fd1-0024-4d98-8a09-1ff6869d56f9',
@@ -238,17 +238,17 @@ export const offersList = [
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
-        zoom: 13
-      }
+        zoom: 13,
+      },
     },
     location: {
       latitude: 51.239402000000005,
       longitude: 6.756314000000001,
-      zoom: 16
+      zoom: 16,
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4.7
+    rating: 4.7,
   },
   {
     id: '5359142f-c16c-439e-a2ff-73cfe1bbd2ed',
@@ -261,21 +261,21 @@ export const offersList = [
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
-        zoom: 13
-      }
+        zoom: 13,
+      },
     },
     location: {
       latitude: 51.243402,
       longitude: 6.791314,
-      zoom: 16
+      zoom: 16,
     },
     isFavorite: false,
     isPremium: false,
-    rating: 2.6
+    rating: 2.6,
   },
   {
     id: '6961e27a-690c-4f1a-a57a-4f6f0cbc1878',
-    title: 'The house among olive' ,
+    title: 'The house among olive',
     type: 'apartment',
     price: 194,
     previewImage: 'https://13.design.pages.academy/static/hotel/15.jpg',
@@ -284,17 +284,17 @@ export const offersList = [
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
-        zoom: 13
-      }
+        zoom: 13,
+      },
     },
     location: {
       latitude: 51.214402,
       longitude: 6.764314000000001,
-      zoom: 16
+      zoom: 16,
     },
     isFavorite: false,
     isPremium: false,
-    rating: 4.7
+    rating: 4.7,
   },
   {
     id: '3b311d82-e5f3-4698-bd74-17fbb8fd4daa',
@@ -307,16 +307,16 @@ export const offersList = [
       location: {
         latitude: 51.225402,
         longitude: 6.776314,
-        zoom: 13
-      }
+        zoom: 13,
+      },
     },
     location: {
       latitude: 51.225402,
       longitude: 6.784314,
-      zoom: 16
+      zoom: 16,
     },
     isFavorite: false,
     isPremium: true,
-    rating: 2.4
-  }
+    rating: 2.4,
+  },
 ];
