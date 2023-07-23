@@ -1,10 +1,12 @@
+import { Link } from 'react-router-dom';
+import { AppRoute, RATING_COEF } from '../../const';
 import { TOffer } from '../../types/offer';
 
 type TFavoriteProps = {
   offer: TOffer;
 };
 
-export default function FavoriteCard({ offer }: TFavoriteProps): JSX.Element {
+function FavoriteCard({ offer }: TFavoriteProps): JSX.Element {
   return (
     <article className="favorites__card place-card">
       {offer.isPremium && (
@@ -13,7 +15,7 @@ export default function FavoriteCard({ offer }: TFavoriteProps): JSX.Element {
         </div>
       )}
       <div className="favorites__image-wrapper place-card__image-wrapper">
-        <a href="#">
+        <Link to={`${AppRoute.Offer}${offer.id}`}>
           <img
             className="place-card__image"
             src={offer.previewImage}
@@ -21,7 +23,7 @@ export default function FavoriteCard({ offer }: TFavoriteProps): JSX.Element {
             height={110}
             alt="Place image"
           />
-        </a>
+        </Link>
       </div>
       <div className="favorites__card-info place-card__info">
         <div className="place-card__price-wrapper">
@@ -41,15 +43,17 @@ export default function FavoriteCard({ offer }: TFavoriteProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '100%' }}></span>
+            <span style={{ width: `${Math.round(offer.rating) * RATING_COEF}%` }}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+          <Link to={`${AppRoute.Offer}${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
   );
 }
+
+export default FavoriteCard;

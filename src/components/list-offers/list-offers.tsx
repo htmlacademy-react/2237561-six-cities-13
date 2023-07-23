@@ -1,15 +1,21 @@
-import { TOffers } from '../../types/offer';
-import CitiesCard from '../cities-card/card';
+import { useState } from 'react';
+import { TOffer } from '../../types/offer';
+import CitiesCard from '../offer-card/card';
 
 type TListOffers = {
-  offers: TOffers;
+  offers: TOffer[];
 };
 
 export default function ListOffers({ offers }: TListOffers): JSX.Element {
+  const [activeCard, setActiveCard] = useState<string | null>(null);
   return (
-    <div className="cities__places-list places__list tabs__content">
+    <div className="cities__places-list places__list tabs__content" data-active-card={activeCard}>
       {offers.map((offer) => (
-        <CitiesCard key={offer.id} offer={offer} />
+        <CitiesCard
+          key={offer.id}
+          offer={offer}
+          onCardHover={setActiveCard}
+        />
       ))}
     </div>
   );

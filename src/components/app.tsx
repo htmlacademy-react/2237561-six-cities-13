@@ -4,17 +4,18 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import MainScreen from '../pages/main/main';
 import LoginScreen from '../pages/login/login';
 import FavoritesPage from '../pages/favorites/favorites';
-import Offer from '../pages/offer/offer';
+import OfferPage from '../pages/offer/offer-page';
 import NotFoundScreen from '../pages/not-found/not-found';
 import PrivateRoute from './private-route/private-route';
-import {TOffers} from '../types/offer';
+import {TOffer, TFullOffer} from '../types/offer';
 
 type AppScreenProps = {
   offersCount: number;
-  offers: TOffers;
+  offers: TOffer[];
+  fullOffers: TFullOffer[];
 };
 
-function App({ offersCount, offers }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers, fullOffers }: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -32,7 +33,10 @@ function App({ offersCount, offers }: AppScreenProps): JSX.Element {
               </PrivateRoute>
             }
           />
-          <Route path={AppRoute.Offer} element={<Offer />} />
+          <Route
+            path={AppRoute.OfferId}
+            element={<OfferPage fullOffers= {fullOffers} />}
+          />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>
       </BrowserRouter>

@@ -1,15 +1,24 @@
+import { Link } from 'react-router-dom';
 import { TOffer } from '../../types/offer';
+import { AppRoute, RATING_COEF } from '../../const';
 
 type TCitiesCardProps = {
   offer: TOffer;
+  onCardHover: (activeCard: string | null) => void;
 }
 
-function CitiesCard({offer}: TCitiesCardProps): JSX.Element {
+function CitiesCard({offer, onCardHover}: TCitiesCardProps): JSX.Element {
+
   return (
-    <article className="cities__card place-card">
-      <div className="place-card__mark">
-        <span>{offer.isPremium}</span>
-      </div>
+    <article className="cities__card place-card"
+      onMouseOver={() => onCardHover(offer.id)}
+      onMouseOut={() => onCardHover(null)}
+    >
+      {offer.isPremium && (
+        <div className="place-card__mark">
+          <span>Premium</span>
+        </div>
+      )}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <a href="#">
           <img
@@ -36,13 +45,13 @@ function CitiesCard({offer}: TCitiesCardProps): JSX.Element {
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: '80%' }}></span>
+            <span style={{ width: `${Math.round(offer.rating) * RATING_COEF}%` }}/>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
-        </h2>
+        <Link to={`${AppRoute.Offer}${offer.id}`}>
+          <h2 className="place-card__name">{offer.title}</h2>
+        </Link>
         <p className="place-card__type">{offer.type}</p>
       </div>
     </article>
