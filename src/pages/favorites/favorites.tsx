@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 import { TOffer } from '../../types/offer';
 import Header from '../../components/header/header';
-import FavoriteCard from './favorite-card';
+import FavoriteCard from '../../components/favorite-card/favorite-card';
 
 type TFavoritesPageProps = {
   offers: TOffer[];

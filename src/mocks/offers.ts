@@ -22,8 +22,8 @@ export const fullOffers = [
       }
     },
     location: {
-      latitude: 52.36854,
-      longitude: 4.887976,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     goods: [
@@ -122,8 +122,8 @@ export const fullOffers = [
       }
     },
     location: {
-      latitude: 52.389540000000004,
-      longitude: 4.883976,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     goods: [
@@ -172,8 +172,8 @@ export const fullOffers = [
       }
     },
     location: {
-      latitude: 52.35054,
-      longitude: 4.908976,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     goods: [
@@ -217,8 +217,8 @@ export const offersList = [
       }
     },
     location: {
-      latitude: 52.36854,
-      longitude: 4.887976,
+      latitude: 52.3909553943508,
+      longitude: 4.929309666406198,
       zoom: 16
     },
     isFavorite: false,
@@ -263,8 +263,8 @@ export const offersList = [
       }
     },
     location: {
-      latitude: 52.389540000000004,
-      longitude: 4.883976,
+      latitude: 52.3909553943508,
+      longitude: 4.85309666406198,
       zoom: 16
     },
     isFavorite: true,
@@ -286,8 +286,8 @@ export const offersList = [
       }
     },
     location: {
-      latitude: 52.35054,
-      longitude: 4.908976,
+      latitude: 52.3809553943508,
+      longitude: 4.939309666406198,
       zoom: 16
     },
     isFavorite: false,
