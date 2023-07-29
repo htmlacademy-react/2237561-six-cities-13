@@ -1,9 +1,11 @@
+import {useState} from 'react';
 import { Helmet } from 'react-helmet-async';
 import { TOffer } from '../../types/offer';
 import OffersListSort from '../../components/sort/offers-list-sort';
 import Header from '../../components/header/header';
 import CitiesTabsSort from '../../components/sort/cities-tabs-sort';
 import ListOffers from '../../components/list-offers/list-offers';
+import Map from '../../components/map/map';
 
 type MainScreenProps = {
   offersCount: number;
@@ -11,6 +13,12 @@ type MainScreenProps = {
 };
 
 function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<string | null>(null);
+
+  const onCardHover = (id: string | null) => {
+    setActiveCardId(id);
+  };
+
   return (
     <div className="page page--gray page--main">
       <Helmet>
@@ -30,10 +38,17 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 {offersCount} places to stay in Amsterdam
               </b>
               <OffersListSort/>
-              <ListOffers offers={offers}/>
+              <ListOffers
+                offers={offers}
+                onCardHover={onCardHover}
+              />
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map
+                location={offers[0].city.location}
+                offers={offers}
+                selectedOffer={activeCardId}
+              />
             </div>
           </div>
         </div>
