@@ -1,23 +1,14 @@
 import {TUser} from './user';
+import {TLocation} from './location';
+import {TCity} from './city';
 
 export type TOffer = {
   id: string;
   title: string;
   type: string;
   price: number;
-  city: {
-    name: string;
-    location: {
-      latitude: number;
-      longitude: number;
-      zoom: number;
-    };
-  };
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
+  city: TCity;
+  location: TLocation;
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
@@ -31,19 +22,8 @@ export type TFullOffer = {
   type: string;
   price: number;
   images: string[];
-  city: {
-    name: string;
-    location: {
-      latitude: number;
-      longitude: number;
-      zoom: number;
-    };
-  };
-  location: {
-    latitude: number;
-    longitude: number;
-    zoom: number;
-  };
+  city: TCity;
+  location: TLocation;
   goods: string[];
   host: TUser;
   isPremium: boolean;

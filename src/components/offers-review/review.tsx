@@ -1,4 +1,4 @@
-import ReviewForm from './review-form';
+import ReviewForm from '../offers-review-form/review-form';
 import { TReview } from '../../types/review';
 import { RATING_COEF } from '../../const';
 
