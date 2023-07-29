@@ -1,3 +1,5 @@
+import {TUser} from './user';
+
 export type TOffer = {
   id: string;
   title: string;
@@ -43,11 +45,7 @@ export type TFullOffer = {
     zoom: number;
   };
   goods: string[];
-  host: {
-    isPro: boolean;
-    name: string;
-    avatarUrl: string;
-  };
+  host: TUser;
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;

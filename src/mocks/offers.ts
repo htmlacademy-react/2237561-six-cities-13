@@ -1,4 +1,4 @@
-export const offers = [
+export const fullOffers = [
   {
     id: '97a2a938-aca1-4f2a-8b5e-93c8918eb8c8',
     title: 'House in countryside',
@@ -139,13 +139,13 @@ export const offers = [
       'Baby seat'
     ],
     host: {
-      isPro: true,
-      name: 'Angelina',
+      isPro: false,
+      name: 'Nataly',
       avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
     },
     isPremium: true,
-    isFavorite: false,
-    rating: 1.5,
+    isFavorite: true,
+    rating: 4,
     bedrooms: 1,
     maxAdults: 4
   },
@@ -267,7 +267,7 @@ export const offersList = [
       longitude: 4.883976,
       zoom: 16
     },
-    isFavorite: false,
+    isFavorite: true,
     isPremium: true,
     rating: 1.5
   },

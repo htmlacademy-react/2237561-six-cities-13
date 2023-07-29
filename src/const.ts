@@ -1,5 +1,5 @@
 export const Setting = {
-  OffersCount: 5,
+  OffersCount: 4,
 } as const;
 
 export enum AppRoute {
@@ -26,4 +26,15 @@ export const CITIES = [
   'Dusseldorf'
 ];
 
+export const GRADES: string[] = [
+  'perfect',
+  'good',
+  'not bad',
+  'badly',
+  'terribly'
+];
+
 export const RATING_COEF = 20;
+
+export const MIN_COMMENTS_LENGTH = 50;
+export const MAX_COMMENTS_LENGTH = 300;
