@@ -5,7 +5,7 @@ function LoginScreen(): JSX.Element {
   return (
     <div className="page page--gray page--login">
       <Helmet>
-        <title>Авторизация</title>
+        <title>6 cities - Authorization</title>
       </Helmet>
       <header className="header">
         <div className="container">
