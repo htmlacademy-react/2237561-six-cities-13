@@ -4,7 +4,7 @@ import { AppRoute, AuthorizationStatus } from '../const';
 import MainScreen from '../pages/main/main';
 import LoginScreen from '../pages/login/login';
 import FavoritesPage from '../pages/favorites/favorites';
-import OfferPage from '../pages/offer/offer-page';
+import OfferPage from '../pages/offer/offer';
 import NotFoundScreen from '../pages/not-found/not-found';
 import PrivateRoute from './private-route/private-route';
 import {TOffer, TFullOffer} from '../types/offer';
@@ -15,9 +15,10 @@ type AppScreenProps = {
   offers: TOffer[];
   fullOffers: TFullOffer[];
   reviews: TReview[];
+  nearOffers: TOffer[];
 };
 
-function App({ offersCount, offers, fullOffers, reviews }: AppScreenProps): JSX.Element {
+function App({ offersCount, offers, fullOffers, reviews, nearOffers}: AppScreenProps): JSX.Element {
   return (
     <HelmetProvider>
       <BrowserRouter>
@@ -37,7 +38,7 @@ function App({ offersCount, offers, fullOffers, reviews }: AppScreenProps): JSX.
           />
           <Route
             path={AppRoute.OfferId}
-            element={<OfferPage fullOffers= {fullOffers} reviews={reviews} />}
+            element={<OfferPage fullOffers= {fullOffers} reviews={reviews} nearOffers={nearOffers}/>}
           />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>

@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './components/app';
 import {Setting} from './const';
-import {offersList, fullOffers} from './mocks/offers';
+import {offersList, fullOffers, nearOffers} from './mocks/offers';
 import {allReviews} from './mocks/review';
 
 const root = ReactDOM.createRoot(
@@ -16,6 +16,7 @@ root.render(
       offers = {offersList}
       fullOffers = {fullOffers}
       reviews={allReviews}
+      nearOffers={nearOffers}
     />
   </React.StrictMode>
 );

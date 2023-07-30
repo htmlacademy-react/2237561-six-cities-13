@@ -295,3 +295,5 @@ export const offersList = [
     rating: 2.8
   },
 ];
+
+export const nearOffers = offersList.slice(0, 3);
