@@ -145,7 +145,7 @@ export const fullOffers = [
     },
     isPremium: true,
     isFavorite: true,
-    rating: 4,
+    rating: 1.5,
     bedrooms: 1,
     maxAdults: 4
   },
