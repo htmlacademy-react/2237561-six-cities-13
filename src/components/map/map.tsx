@@ -63,6 +63,7 @@ export default function Map({location, offers, selectedOffer, isMainMap}: TMapPr
         width: '100%',
         maxWidth: '1144px',
         margin: '0 auto',
+        marginBottom: '50px',
       }}
     >
     </section>
