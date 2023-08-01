@@ -145,7 +145,7 @@ export const fullOffers = [
     },
     isPremium: true,
     isFavorite: true,
-    rating: 4,
+    rating: 1.5,
     bedrooms: 1,
     maxAdults: 4
   },
@@ -295,3 +295,5 @@ export const offersList = [
     rating: 2.8
   },
 ];
+
+export const nearOffers = offersList.slice(0, 3);

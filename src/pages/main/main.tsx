@@ -41,6 +41,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
               <ListOffers
                 offers={offers}
                 onCardHover={onCardHover}
+                isMainOfferList
               />
             </section>
             <div className="cities__right-section">
@@ -48,6 +49,7 @@ function MainScreen({ offersCount, offers }: MainScreenProps): JSX.Element {
                 location={offers[0].city.location}
                 offers={offers}
                 selectedOffer={activeCardId}
+                isMainMap
               />
             </div>
           </div>

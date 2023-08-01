@@ -1,6 +1,7 @@
 import {useRef, useEffect} from 'react';
 import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import cn from 'classnames';
 
 import useMap from '../../hooks/useMap';
 import {TLocation} from '../../types/location';
@@ -10,6 +11,7 @@ type TMapProps = {
   location: TLocation;
   offers: TOffer[];
   selectedOffer: string | null;
+  isMainMap?: boolean;
 }
 
 const defaultMarkerIcon = leaflet.icon({
@@ -24,7 +26,7 @@ const activeMarkerIcon = leaflet.icon({
   iconAnchor: [14, 40]
 });
 
-export default function Map({location, offers, selectedOffer}: TMapProps): JSX.Element {
+export default function Map({location, offers, selectedOffer, isMainMap}: TMapProps): JSX.Element {
   const mapRef = useRef(null);
   const map = useMap(mapRef, location);
 
@@ -50,7 +52,10 @@ export default function Map({location, offers, selectedOffer}: TMapProps): JSX.E
 
   return (
     <section
-      className="cities__map map"
+      className={cn('map', {
+        'cities__map': isMainMap,
+        'offer__map': !isMainMap
+      })}
       ref={mapRef}
       style={{
         height: '100%',
@@ -58,6 +63,7 @@ export default function Map({location, offers, selectedOffer}: TMapProps): JSX.E
         width: '100%',
         maxWidth: '1144px',
         margin: '0 auto',
+        marginBottom: '50px',
       }}
     >
     </section>
