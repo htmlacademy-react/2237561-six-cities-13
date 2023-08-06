@@ -17,14 +17,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-export const CITIES = [
-  'Paris',
-  'Cologne',
-  'Brussels',
-  'Amsterdam',
-  'Hamburg',
-  'Dusseldorf'
-];
 
 export const GRADES: string[] = [
   'perfect',
@@ -38,3 +30,30 @@ export const RATING_COEF = 20;
 
 export const MIN_COMMENTS_LENGTH = 50;
 export const MAX_COMMENTS_LENGTH = 300;
+
+export const CITIES = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf'
+];
+
+export const DEFAULT_LOCATION = {
+  location: {
+    latitude: 48.85661,
+    longitude: 2.351499,
+    zoom: 13
+  },
+  name: 'Paris'
+};
+
+export enum NameSpace {
+Offers = 'OFFERS',
+Offer = 'OFFER',
+NearPlaces = 'NEAR_PLACES',
+Reviews = 'REVIEWS',
+Favorites = 'FAVORITES',
+User = 'USER',
+}
