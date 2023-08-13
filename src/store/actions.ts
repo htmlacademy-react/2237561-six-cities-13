@@ -4,7 +4,7 @@ import { TReview } from '../types/review';
 import { NameSpace } from '../const';
 import { TCity } from '../types/city';
 
-export const fetchOffers = createAction(`${NameSpace.Offers}/fetchOffers`);
+export const fetchOffers = createAction<TOffer['id']>(`${NameSpace.Offers}/fetchOffers`);
 export const fetchOffer = createAction<TFullOffer['id']>(
   `${NameSpace.Offer}/fetchOffer`
 );

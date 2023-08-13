@@ -14,27 +14,28 @@ import {
   fetchFavorites,
 } from './actions';
 
-import { DEFAULT_LOCATION } from '../const';
+import { CITIES } from '../const';
 import { fullOffers, offersList, nearOffers } from '../mocks/offers';
 import { allReviews } from '../mocks/review';
 
-const InitialState: {
+type InitialState = {
   offers: TOffer[];
   nearPlaces: TOffer[];
   reviews: TReview[];
   offer: TFullOffer | null;
   favorites: TOffer[];
   activeCity: TCity;
-} = {
+};
+const initialState: InitialState = {
   offers: [],
   nearPlaces: [],
   reviews: [],
   offer: null,
   favorites: [],
-  activeCity: DEFAULT_LOCATION,
+  activeCity: CITIES[0],
 };
 
-export const reducer = createReducer(InitialState, (builder) => {
+export const reducer = createReducer(initialState, (builder) => {
   builder
     .addCase(fetchOffers, (state) => {
       state.offers = offersList;

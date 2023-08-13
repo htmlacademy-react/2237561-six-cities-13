@@ -3,7 +3,6 @@ import ReactDOM from 'react-dom/client';
 import {Provider} from 'react-redux';
 import {store} from './store/store';
 import App from './components/app';
-import {Setting} from './const';
 import {offersList, fullOffers, nearOffers} from './mocks/offers';
 import {allReviews} from './mocks/review';
 
@@ -15,7 +14,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App
-        offersCount = {Setting.OffersCount}
         offers = {offersList}
         fullOffers = {fullOffers}
         reviews={allReviews}

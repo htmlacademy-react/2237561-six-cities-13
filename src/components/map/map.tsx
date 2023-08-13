@@ -32,6 +32,15 @@ export default function Map({location, offers, selectedOffer, isMainMap}: TMapPr
 
   useEffect(() => {
     if (map) {
+      const markerGroup = leaflet.layerGroup().addTo(map);
+
+      map.setView(
+        {
+          lat: location.latitude,
+          lng: location.longitude
+        },
+        location.zoom
+      );
       offers.forEach((offer) => {
         leaflet
           .marker(
@@ -45,10 +54,10 @@ export default function Map({location, offers, selectedOffer, isMainMap}: TMapPr
                 : defaultMarkerIcon
             }
           )
-          .addTo(map);
+          .addTo(markerGroup);
       });
     }
-  }, [map, offers, selectedOffer]);
+  }, [map, location, offers, selectedOffer]);
 
   return (
     <section
