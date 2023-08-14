@@ -1,5 +1,7 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
+//import { useDispatch } from 'react-redux';
+//import { fetchOffers } from '../store/actions';
 import { AppRoute, AuthorizationStatus } from '../const';
 import MainScreen from '../pages/main/main';
 import LoginScreen from '../pages/login/login';
@@ -11,21 +13,21 @@ import {TOffer, TFullOffer} from '../types/offer';
 import {TReview} from '../types/review';
 
 type AppScreenProps = {
-  offersCount: number;
   offers: TOffer[];
   fullOffers: TFullOffer[];
   reviews: TReview[];
   nearOffers: TOffer[];
 };
 
-function App({ offersCount, offers, fullOffers, reviews, nearOffers}: AppScreenProps): JSX.Element {
+function App({ offers, fullOffers, reviews, nearOffers}: AppScreenProps): JSX.Element {
+
   return (
     <HelmetProvider>
       <BrowserRouter>
         <Routes>
           <Route
             path={AppRoute.Main}
-            element={<MainScreen offersCount={offersCount} offers={offers} />}
+            element={<MainScreen />}
           />
           <Route path={AppRoute.Login} element={<LoginScreen />} />
           <Route

@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import {Provider} from 'react-redux';
+import {store} from './store/store';
 import App from './components/app';
-import {Setting} from './const';
 import {offersList, fullOffers, nearOffers} from './mocks/offers';
 import {allReviews} from './mocks/review';
 
@@ -11,12 +12,13 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <App
-      offersCount = {Setting.OffersCount}
-      offers = {offersList}
-      fullOffers = {fullOffers}
-      reviews={allReviews}
-      nearOffers={nearOffers}
-    />
+    <Provider store={store}>
+      <App
+        offers = {offersList}
+        fullOffers = {fullOffers}
+        reviews={allReviews}
+        nearOffers={nearOffers}
+      />
+    </Provider>
   </React.StrictMode>
 );

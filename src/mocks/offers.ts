@@ -198,6 +198,102 @@ export const fullOffers = [
     rating: 2.8,
     bedrooms: 1,
     maxAdults: 1
+  },
+  {
+    id: 'fd974e25-dfcf-4dad-8470-75803d4c88d5',
+    title: 'The house among olive' ,
+    description: 'Peaceful studio in the most wanted area in town. Quiet house Near of everything. Completely renovated. Lovely neighbourhood, lot of trendy shops, restaurants and bars in a walking distance.',
+    type: 'apartment',
+    price: 327,
+    images: [
+      'https://13.design.pages.academy/static/hotel/3.jpg',
+      'https://13.design.pages.academy/static/hotel/18.jpg',
+      'https://13.design.pages.academy/static/hotel/15.jpg',
+      'https://13.design.pages.academy/static/hotel/10.jpg',
+      'https://13.design.pages.academy/static/hotel/17.jpg',
+      'https://13.design.pages.academy/static/hotel/13.jpg'
+    ],
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.868610000000004,
+      longitude: 2.342499,
+      zoom: 16
+    },
+    goods: [
+      'Laptop friendly workspace',
+      'Washer',
+      'Fridge',
+      'Kitchen',
+      'Baby seat'
+    ],
+    host: {
+      isPro: true,
+      name: 'Angelina',
+      avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
+    },
+    isPremium: false,
+    isFavorite: false,
+    rating: 1.3,
+    bedrooms: 5,
+    maxAdults: 5
+  },
+  {
+    id: '173bcfbd-ac4c-42e5-b184-b9218df2c12b',
+    title: 'Perfectly located Castro',
+    description: 'Discover daily local life in city center, friendly neighborhood, clandestine casino, karaoke, old-style artisans, art gallery and artist studio downstairs.',
+    type: 'apartment',
+    price: 127,
+    images: [
+      'https://13.design.pages.academy/static/hotel/16.jpg',
+      'https://13.design.pages.academy/static/hotel/1.jpg',
+      'https://13.design.pages.academy/static/hotel/6.jpg',
+      'https://13.design.pages.academy/static/hotel/7.jpg',
+      'https://13.design.pages.academy/static/hotel/3.jpg',
+      'https://13.design.pages.academy/static/hotel/4.jpg'
+    ],
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
+      zoom: 16
+    },
+    goods: [
+      'Baby seat',
+      'Kitchen',
+      'Dishwasher',
+      'Heating',
+      'Coffee machine',
+      'Laptop friendly workspace',
+      'Fridge',
+      'Cable TV',
+      'Air conditioning',
+      'Wi-Fi',
+      'Towels'
+    ],
+    host: {
+      isPro: true,
+      name: 'Angelina',
+      avatarUrl: 'https://13.design.pages.academy/static/host/avatar-angelina.jpg'
+    },
+    isPremium: true,
+    isFavorite: false,
+    rating: 4.1,
+    bedrooms: 2,
+    maxAdults: 10
   }
 ];
 
@@ -293,6 +389,52 @@ export const offersList = [
     isFavorite: false,
     isPremium: true,
     rating: 2.8
+  },
+  {
+    id: 'fd974e25-dfcf-4dad-8470-75803d4c88d5',
+    title: 'The house among olive' ,
+    type: 'apartment',
+    price: 327,
+    previewImage: 'https://13.design.pages.academy/static/hotel/14.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.868610000000004,
+      longitude: 2.342499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: false,
+    rating: 1.3
+  },
+  {
+    id: '173bcfbd-ac4c-42e5-b184-b9218df2c12b',
+    title: 'Perfectly located Castro',
+    type: 'apartment',
+    price: 127,
+    previewImage: 'https://13.design.pages.academy/static/hotel/3.jpg',
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13
+      }
+    },
+    location: {
+      latitude: 48.858610000000006,
+      longitude: 2.330499,
+      zoom: 16
+    },
+    isFavorite: false,
+    isPremium: true,
+    rating: 4.1
   },
 ];
 
