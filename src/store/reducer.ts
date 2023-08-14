@@ -14,7 +14,7 @@ import {
   fetchFavorites,
 } from './actions';
 
-import { CITIES } from '../const';
+import { DEFAULT_LOCATION } from '../const';
 import { fullOffers, offersList, nearOffers } from '../mocks/offers';
 import { allReviews } from '../mocks/review';
 
@@ -32,7 +32,7 @@ const initialState: InitialState = {
   reviews: [],
   offer: null,
   favorites: [],
-  activeCity: CITIES[0],
+  activeCity: DEFAULT_LOCATION,
 };
 
 export const reducer = createReducer(initialState, (builder) => {

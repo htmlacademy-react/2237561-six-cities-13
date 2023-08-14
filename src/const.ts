@@ -82,15 +82,14 @@ export const CITIES = [
   }
 ];
 
-/*export const DEFAULT_LOCATION = [{
+export const DEFAULT_LOCATION = {
   location: {
     latitude: 48.85661,
     longitude: 2.351499,
     zoom: 13
   },
   name: 'Paris'
-},
-];*/
+};
 
 export enum NameSpace {
 Offers = 'OFFERS',
