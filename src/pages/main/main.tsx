@@ -1,25 +1,30 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import cn from 'classnames';
-import { useAppSelector } from '../../store/index';
-import { getOffersByLocation } from '../../utils';
+import { useAppSelector, useAppDispatch } from '../../store/index';
 import MainEmpty from '../../components/main-empty/main-empty';
 import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
 import CitiesTabsSort from '../../components/cities-tabs/cities-tabs';
 import ListOffers from '../../components/list-offers/list-offers';
 import Map from '../../components/map/map';
+import { fetchOffers } from '../../store/actions';
 
 function MainScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
   const offers = useAppSelector((store) => store.offers);
   const activeCity = useAppSelector((store) => store.activeCity);
-  const cityOffers = getOffersByLocation(offers, activeCity.name);
+  const cityOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
   const onCardHover = (id: string | null) => {
     setActiveCardId(id);
   };
+
+  useEffect(() => {
+    dispatch(fetchOffers(activeCity.name));
+  }, [dispatch, activeCity.name]);
 
   return (
     <div className="page page--gray page--main">

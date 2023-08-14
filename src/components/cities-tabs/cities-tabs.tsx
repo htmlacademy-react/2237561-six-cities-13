@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react';
 import { CITIES, DEFAULT_LOCATION } from '../../const';
 import CitiesTabsItem from './cities-tabs-item';
 

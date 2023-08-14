@@ -16,13 +16,13 @@ type TMapProps = {
 
 const defaultMarkerIcon = leaflet.icon({
   iconUrl: './img/pin.svg',
-  iconSize: [28, 40],
+  iconSize: [27, 39],
   iconAnchor: [14, 40]
 });
 
 const activeMarkerIcon = leaflet.icon({
   iconUrl: './img/pin-active.svg',
-  iconSize: [28, 40],
+  iconSize: [27, 39],
   iconAnchor: [14, 40]
 });
 
