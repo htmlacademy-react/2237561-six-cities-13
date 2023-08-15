@@ -1,7 +1,5 @@
 import { Route, BrowserRouter, Routes } from 'react-router-dom';
 import {HelmetProvider} from 'react-helmet-async';
-//import { useDispatch } from 'react-redux';
-//import { fetchOffers } from '../store/actions';
 import { AppRoute, AuthorizationStatus } from '../const';
 import MainScreen from '../pages/main/main';
 import LoginScreen from '../pages/login/login';

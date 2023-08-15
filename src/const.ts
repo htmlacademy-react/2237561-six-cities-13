@@ -1,7 +1,3 @@
-/*export const Setting = {
-  OffersCount: 4,
-} as const;*/
-
 export enum AppRoute {
   Login = '/login',
   Favorites = '/favorites',
@@ -99,3 +95,10 @@ Reviews = 'REVIEWS',
 Favorites = 'FAVORITES',
 User = 'USER',
 }
+
+export const SortType = {
+  Popular: 'Popular',
+  LowToHigh: 'Price: low to high',
+  HighToLow: 'Price: high to low',
+  TopRated: 'Top rated first',
+} as const;

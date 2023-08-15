@@ -6,15 +6,18 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
 import CitiesTabsSort from '../../components/cities-tabs/cities-tabs';
-import ListOffers from '../../components/list-offers/list-offers';
+import ListOffers from '../../components/cities-offers-list/cities-offers-list';
 import Map from '../../components/map/map';
 import { fetchOffers } from '../../store/actions';
+import { TSorting } from '../../types/sorting';
 
 function MainScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const offers = useAppSelector((store) => store.offers);
   const activeCity = useAppSelector((store) => store.activeCity);
   const cityOffers = offers.filter((offer) => offer.city.name === activeCity.name);
+
+  const [activeSorting, setActiveSorting] = useState<TSorting>('Popular');
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
@@ -50,11 +53,15 @@ function MainScreen(): JSX.Element {
                 <b className="places__found">
                   {cityOffers.length} places to stay in {activeCity.name}
                 </b>
-                <OffersListSort />
+                <OffersListSort
+                  activeSorting= {activeSorting}
+                  onChange={(newSorting) => setActiveSorting(newSorting)}
+                />
                 <ListOffers
                   offers={cityOffers}
                   onCardHover={onCardHover}
                   isMainOfferList
+                  activeSorting= {activeSorting}
                 />
               </section>
               <div className="cities__right-section">

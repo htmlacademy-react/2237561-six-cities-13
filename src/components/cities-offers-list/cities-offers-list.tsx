@@ -1,14 +1,17 @@
 import cn from 'classnames';
 import { TOffer } from '../../types/offer';
+import { TSorting } from '../../types/sorting';
+import { sorting } from '../common/sort';
 import CitiesCard from '../offer-card/card';
 
 type TListOffers = {
   offers: TOffer[];
+  activeSorting: TSorting;
   onCardHover: (id: string | null) => void;
   isMainOfferList?: boolean;
 };
 
-export default function ListOffers({ offers, onCardHover, isMainOfferList }: TListOffers): JSX.Element {
+export default function ListOffers({ offers, activeSorting, onCardHover, isMainOfferList }: TListOffers): JSX.Element {
   return (
     <div
       className={cn(
@@ -18,7 +21,7 @@ export default function ListOffers({ offers, onCardHover, isMainOfferList }: TLi
         {'near-places__list': !isMainOfferList}
       )}
     >
-      {offers.map((offer) => (
+      {sorting[activeSorting](offers).map((offer) => (
         <CitiesCard
           key={offer.id}
           offer={offer}
