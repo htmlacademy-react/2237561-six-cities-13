@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
 import OfferReview from '../../components/offers-review/review';
 import BookmarksButton from '../../components/bookmark/favorite-bookmark';
-import ListOffers from '../../components/list-offers/list-offers';
+import ListOffers from '../../components/cities-offers-list/cities-offers-list';
 import { TFullOffer, TOffer } from '../../types/offer';
 import { TReview } from '../../types/review';
 import { AppRoute, RATING_COEF } from '../../const';
