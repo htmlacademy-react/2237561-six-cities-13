@@ -1,6 +1,15 @@
-import {TypedUseSelectorHook, useSelector, useDispatch} from 'react-redux';
-import type {TState, TAppDispatch} from '../types/state';
+import {configureStore} from '@reduxjs/toolkit';
+import {reducer} from './reducer';
+import {createAPI} from '../services/api';
 
-export const useAppDispatch = () => useDispatch<TAppDispatch>();
-export const useAppSelector: TypedUseSelectorHook<TState> = useSelector;
+export const api = createAPI();
 
+export const store = configureStore({
+  reducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      thunk: {
+        extraArgument: api,
+      },
+    }),
+});

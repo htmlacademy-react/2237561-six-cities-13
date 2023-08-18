@@ -1,4 +1,4 @@
-import { useAppSelector } from '../../store/index';
+import { useAppSelector } from '../../hooks/index';
 
 export default function MainEmpty(): JSX.Element {
   const activeCity = useAppSelector((state) => state.activeCity);

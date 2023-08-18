@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import cn from 'classnames';
-import { useAppSelector, useAppDispatch } from '../../store/index';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import MainEmpty from '../../components/main-empty/main-empty';
 import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
