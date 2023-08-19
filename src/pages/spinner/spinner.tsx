@@ -1,12 +1,16 @@
 import LoadingSpinnerComponent from 'react-spinners-components';
 
-function LoadingScreen() {
+function Spinner() {
 
   return (
-    <LoadingSpinnerComponent
-      type={ 'Ripple' } colors={ [ '#06628d', 'purple'] } size={ '150px' }
-    />
+    <div>
+      <LoadingSpinnerComponent
+        type={ 'Ripple' }
+        colors={ [ '#06628d', 'blue'] }
+        size={ '150px' }
+      />
+    </div>
   );
 }
 
-export default LoadingScreen;
+export default Spinner;
