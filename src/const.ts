@@ -36,6 +36,8 @@ export const DEFAULT_LOCATION = {
 };
 export const MAX_NEAR_PLACES_COUNT = 3;
 
+export const TIMEOUT_SHOW_ERROR = 2000;
+
 export const CITIES = [
   {
     location: {
@@ -101,6 +103,7 @@ export enum NameSpace {
   Reviews = 'REVIEWS',
   Favorites = 'FAVORITES',
   User = 'USER',
+  Data= 'DATA',
   }
 
 export enum APIRoute {
@@ -112,3 +115,5 @@ export enum APIRoute {
   Login = '/login',
   Logout = '/logout',
 }
+
+

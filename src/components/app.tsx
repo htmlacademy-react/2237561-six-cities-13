@@ -24,9 +24,10 @@ function App({ reviews}: AppScreenProps): JSX.Element {
     store.dispatch(fetchOffersAction());
   }, []);
 
+  const authorizationStatus = useAppSelector((state) => state.authorizationStatus);
   const isOffersLoading = useAppSelector((state) => state.isOffersDataLoading);
 
-  if (isOffersLoading) {
+  if (authorizationStatus === AuthorizationStatus.Unknown || isOffersLoading) {
     return (
       <Spinner />
     );

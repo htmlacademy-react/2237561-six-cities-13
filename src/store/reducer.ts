@@ -14,9 +14,11 @@ import {
   dropOffer,
   setActiveCity,
   fetchFavorites,
+  requireAuthorization,
+  setError,
 } from './actions';
 
-import { DEFAULT_LOCATION } from '../const';
+import { DEFAULT_LOCATION, AuthorizationStatus } from '../const';
 
 type InitialState = {
   offers: TOffer[];
@@ -26,6 +28,8 @@ type InitialState = {
   favorites: TOffer[];
   activeCity: TCity;
   isOffersDataLoading: boolean;
+  authorizationStatus: AuthorizationStatus;
+  error: string | null;
 };
 const initialState: InitialState = {
   offers: [],
@@ -35,6 +39,8 @@ const initialState: InitialState = {
   favorites: [],
   activeCity: DEFAULT_LOCATION,
   isOffersDataLoading: false,
+  authorizationStatus: AuthorizationStatus.Unknown,
+  error: null,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -63,5 +69,11 @@ export const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(fetchFavorites, (state) => {
       state.favorites = state.offers.filter((offer) => offer.isFavorite);
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
+    })
+    .addCase(setError, (state, action) => {
+      state.error = action.payload;
     });
 });
