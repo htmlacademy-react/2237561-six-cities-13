@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { useAppDispatch } from '../../store/index';
+import { useAppDispatch } from '../../hooks/index';
 import { setActiveCity } from '../../store/actions';
 import { TCity } from '../../types/city';
 

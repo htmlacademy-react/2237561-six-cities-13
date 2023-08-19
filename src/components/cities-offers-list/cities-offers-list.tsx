@@ -1,7 +1,7 @@
 import cn from 'classnames';
 import { TOffer } from '../../types/offer';
 import { TSorting } from '../../types/sorting';
-import { sorting } from '../common/sort';
+import { sorting } from '../../utils/sort';
 import CitiesCard from '../offer-card/card';
 
 type TListOffers = {

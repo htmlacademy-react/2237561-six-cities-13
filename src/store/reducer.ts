@@ -3,9 +3,11 @@ import { createReducer } from '@reduxjs/toolkit';
 import { TCity } from '../types/city';
 import { TReview } from '../types/review';
 import { TOffer, TFullOffer } from '../types/offer';
+import {allReviews} from '../components/offers-review/reviews-mocks';
 
 import {
   fetchOffers,
+  fetchOffersLoadingStatus,
   fetchOffer,
   fetchNearPlaces,
   fetchReviews,
@@ -15,8 +17,6 @@ import {
 } from './actions';
 
 import { DEFAULT_LOCATION } from '../const';
-import { fullOffers, offersList, nearOffers } from '../mocks/offers';
-import { allReviews } from '../mocks/review';
 
 type InitialState = {
   offers: TOffer[];
@@ -25,29 +25,31 @@ type InitialState = {
   offer: TFullOffer | null;
   favorites: TOffer[];
   activeCity: TCity;
+  isOffersDataLoading: boolean;
 };
 const initialState: InitialState = {
   offers: [],
   nearPlaces: [],
-  reviews: [],
+  reviews: allReviews,
   offer: null,
   favorites: [],
   activeCity: DEFAULT_LOCATION,
+  isOffersDataLoading: false,
 };
 
 export const reducer = createReducer(initialState, (builder) => {
   builder
-    .addCase(fetchOffers, (state) => {
-      state.offers = offersList;
+    .addCase(fetchOffers, (state, action) => {
+      state.offers = action.payload;
+    })
+    .addCase(fetchOffersLoadingStatus, (state, action) => {
+      state.isOffersDataLoading = action.payload;
     })
     .addCase(fetchOffer, (state, action) => {
-      state.offer =
-        fullOffers.find((offer) => offer.id === action.payload) ?? null;
+      state.offer = action.payload;
     })
     .addCase(fetchNearPlaces, (state, action) => {
-      state.nearPlaces = nearOffers.filter(
-        (offer) => offer.id !== action.payload
-      );
+      state.nearPlaces = action.payload;
     })
     .addCase(fetchReviews, (state) => {
       state.reviews = allReviews;

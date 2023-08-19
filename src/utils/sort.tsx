@@ -1,5 +1,5 @@
-import { TOffer } from '../../types/offer';
-import {TSorting} from '../../types/sorting';
+import { TOffer } from '../types/offer';
+import {TSorting} from '../types/sorting';
 
 const STARS_COUNT = 5;
 
