@@ -1,20 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
 import cn from 'classnames';
-import { useAppSelector, useAppDispatch } from '../../hooks/index';
+import { useAppSelector } from '../../hooks/index';
 import MainEmpty from '../../components/main-empty/main-empty';
 import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
 import CitiesTabsSort from '../../components/cities-tabs/cities-tabs';
 import ListOffers from '../../components/cities-offers-list/cities-offers-list';
 import Map from '../../components/map/map';
-import { fetchOffers } from '../../store/actions';
 import { TSorting } from '../../types/sorting';
 
 function MainScreen(): JSX.Element {
-  const dispatch = useAppDispatch();
-  const offers = useAppSelector((store) => store.offers);
-  const activeCity = useAppSelector((store) => store.activeCity);
+  const offers = useAppSelector((state) => state.offers);
+  const activeCity = useAppSelector((state) => state.activeCity);
   const cityOffers = offers.filter((offer) => offer.city.name === activeCity.name);
 
   const [activeSorting, setActiveSorting] = useState<TSorting>('Popular');
@@ -24,10 +22,6 @@ function MainScreen(): JSX.Element {
   const onCardHover = (id: string | null) => {
     setActiveCardId(id);
   };
-
-  useEffect(() => {
-    dispatch(fetchOffers(activeCity.name));
-  }, [dispatch, activeCity.name]);
 
   return (
     <div className="page page--gray page--main">

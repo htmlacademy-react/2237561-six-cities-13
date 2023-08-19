@@ -4,11 +4,17 @@ import { TReview } from '../types/review';
 import { NameSpace } from '../const';
 import { TCity } from '../types/city';
 
-export const fetchOffers = createAction<TOffer['id']>(`${NameSpace.Offers}/fetchOffers`);
-export const fetchOffer = createAction<TFullOffer['id']>(
+export const fetchOffers = createAction<TOffer[]>(
+  `${NameSpace.Offers}/fetchOffers`
+);
+export const fetchOffersLoadingStatus = createAction(
+  'data/setOffersDataLoadingStatus',
+  (data: boolean) => ({ payload: data }),
+);
+export const fetchOffer = createAction<TFullOffer>(
   `${NameSpace.Offer}/fetchOffer`
 );
-export const fetchNearPlaces = createAction<TOffer['id']>(
+export const fetchNearPlaces = createAction<TOffer[]>(
   `${NameSpace.NearPlaces}/fetchNearPlaces`
 );
 export const fetchReviews = createAction<TReview['id']>(
@@ -21,3 +27,4 @@ export const setActiveCity = createAction<TCity>(
 export const fetchFavorites = createAction(
   `${NameSpace.Favorites}/fetchFavorites`
 );
+
