@@ -31,7 +31,7 @@ export const requireAuthorization = createAction<AuthorizationStatus>(
   `${NameSpace.User}/requireAuthorization`
 );
 export const redirectToRoute = createAction<AppRoute>(
-  `${NameSpace.Data}/redirectToRoute`
+  `${NameSpace.User}/redirectToRoute`
 );
 export const setUserName = createAction<string>(
   `${NameSpace.User}/setUserName`
