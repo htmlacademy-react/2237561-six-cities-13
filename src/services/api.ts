@@ -1,7 +1,7 @@
 import axios, {AxiosInstance, AxiosRequestConfig, AxiosResponse, AxiosError} from 'axios';
 import {StatusCodes} from 'http-status-codes';
 import { getToken } from './token';
-import {processErrorHandle} from './process-error-handle';
+import {toast} from 'react-toastify';
 
 type DetailMessageType = {
   type: string;
@@ -17,12 +17,12 @@ const StatusCodeMapping: Record<number, boolean> = {
 const shouldDisplayError = (response: AxiosResponse) => !!StatusCodeMapping[response.status];
 
 
-const BACKEND_URL = 'https://13.design.pages.academy/six-cities';
+const BASE_URL = 'https://13.design.pages.academy/six-cities';
 const REQUEST_TIMEOUT = 5000;
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({
-    baseURL: BACKEND_URL,
+    baseURL: BASE_URL,
     timeout: REQUEST_TIMEOUT,
   });
 
@@ -41,7 +41,7 @@ export const createAPI = (): AxiosInstance => {
       if (error.response && shouldDisplayError(error.response)) {
         const detailMessage = (error.response.data);
 
-        processErrorHandle(detailMessage.message);
+        toast.warn(detailMessage.message);
       }
 
       throw error;

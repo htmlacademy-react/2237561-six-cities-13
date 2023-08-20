@@ -1,14 +1,14 @@
 import { createAction } from '@reduxjs/toolkit';
 import { TFullOffer, TOffer } from '../types/offer';
 import { TReview } from '../types/review';
-import { NameSpace, AuthorizationStatus } from '../const';
+import { NameSpace, AuthorizationStatus, AppRoute } from '../const';
 import { TCity } from '../types/city';
 
 export const fetchOffers = createAction<TOffer[]>(
   `${NameSpace.Offers}/fetchOffers`
 );
-export const fetchOffersLoadingStatus = createAction(
-  'data/setOffersDataLoadingStatus',
+export const setLoadingStatus = createAction(
+  `${NameSpace.Data}/setLoadingStatus`,
   (data: boolean) => ({ payload: data })
 );
 export const fetchOffer = createAction<TFullOffer>(
@@ -30,6 +30,10 @@ export const fetchFavorites = createAction(
 export const requireAuthorization = createAction<AuthorizationStatus>(
   `${NameSpace.User}/requireAuthorization`
 );
-export const setError = createAction<string | null>(
-  `${NameSpace.Data}/setError`
+export const redirectToRoute = createAction<AppRoute>(
+  `${NameSpace.Data}/redirectToRoute`
 );
+export const setUserName = createAction<string>(
+  `${NameSpace.User}/setUserName`
+);
+

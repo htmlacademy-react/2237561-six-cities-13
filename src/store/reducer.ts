@@ -7,7 +7,7 @@ import {allReviews} from '../components/offers-review/reviews-mocks';
 
 import {
   fetchOffers,
-  fetchOffersLoadingStatus,
+  setLoadingStatus,
   fetchOffer,
   fetchNearPlaces,
   fetchReviews,
@@ -15,7 +15,7 @@ import {
   setActiveCity,
   fetchFavorites,
   requireAuthorization,
-  setError,
+  setUserName,
 } from './actions';
 
 import { DEFAULT_LOCATION, AuthorizationStatus } from '../const';
@@ -27,10 +27,11 @@ type InitialState = {
   offer: TFullOffer | null;
   favorites: TOffer[];
   activeCity: TCity;
-  isOffersDataLoading: boolean;
+  isDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
-  error: string | null;
+  userName: string;
 };
+
 const initialState: InitialState = {
   offers: [],
   nearPlaces: [],
@@ -38,9 +39,9 @@ const initialState: InitialState = {
   offer: null,
   favorites: [],
   activeCity: DEFAULT_LOCATION,
-  isOffersDataLoading: false,
+  isDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
-  error: null,
+  userName: '',
 };
 
 export const reducer = createReducer(initialState, (builder) => {
@@ -48,8 +49,8 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchOffers, (state, action) => {
       state.offers = action.payload;
     })
-    .addCase(fetchOffersLoadingStatus, (state, action) => {
-      state.isOffersDataLoading = action.payload;
+    .addCase(setLoadingStatus, (state, action) => {
+      state.isDataLoading = action.payload;
     })
     .addCase(fetchOffer, (state, action) => {
       state.offer = action.payload;
@@ -73,7 +74,7 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
     })
-    .addCase(setError, (state, action) => {
-      state.error = action.payload;
+    .addCase(setUserName, (state, action) => {
+      state.userName = action.payload;
     });
 });
