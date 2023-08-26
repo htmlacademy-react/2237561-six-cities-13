@@ -8,7 +8,7 @@ import FavoritesPage from '../../pages/favorites/favorites';
 import OfferPage from '../../pages/offer/offer';
 import NotFoundScreen from '../../pages/not-found/not-found';
 import PrivateRoute from '../private-route/private-route';
-import {TReview} from '../../types/review';
+
 import Spinner from '../spinner/spinner';
 import { useAppSelector } from '../../hooks/index';
 import { fetchOffersAction } from '../../store/api-actions';
@@ -16,11 +16,8 @@ import {store} from '../../store/index';
 import HistoryRouter from '../history-route/history-route';
 import browserHistory from '../../browser-history';
 
-type AppScreenProps = {
-  reviews: TReview[];
-};
 
-function App({ reviews}: AppScreenProps): JSX.Element {
+function App(): JSX.Element {
 
   useEffect(() => {
     store.dispatch(fetchOffersAction());
@@ -54,7 +51,7 @@ function App({ reviews}: AppScreenProps): JSX.Element {
           />
           <Route
             path={AppRoute.OfferId}
-            element={<OfferPage reviews={reviews}/>}
+            element={<OfferPage/>}
           />
           <Route path="*" element={<NotFoundScreen />} />
         </Routes>

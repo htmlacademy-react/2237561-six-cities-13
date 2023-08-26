@@ -17,10 +17,13 @@ export const fetchOffer = createAction<TFullOffer>(
 export const fetchNearPlaces = createAction<TOffer[]>(
   `${NameSpace.NearPlaces}/fetchNearPlaces`
 );
-export const fetchReviews = createAction<TReview['id']>(
+export const fetchReviews = createAction<TReview[]>(
   `${NameSpace.Reviews}/fetchReviews`
 );
-export const dropOffer = createAction(`${NameSpace.Offer}/dropOffer`);
+export const addReview = createAction<TReview>(`${NameSpace.Reviews}/addReview`);
+
+export const dropSendingStatus = createAction(`${NameSpace.Reviews}/dropSendingStatus`);
+
 export const setActiveCity = createAction<TCity>(
   `${NameSpace.Offers}/setActiveCity`
 );

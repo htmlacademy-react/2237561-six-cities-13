@@ -1,51 +1,55 @@
+import { useEffect } from 'react';
 import {Helmet} from 'react-helmet-async';
 import { Navigate } from 'react-router-dom';
 import {useState} from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import OfferReview from '../../components/offers-review/review';
+import ReviewList from '../../components/offer-review-list/offer-review-list';
+import ReviewForm from '../../components/offer-review-form/offer-review-form';
 import BookmarksButton from '../../components/bookmark/favorite-bookmark';
-import ListOffers from '../../components/cities-offers-list/cities-offers-list';
-import { TFullOffer, TOffer } from '../../types/offer';
-import { TReview } from '../../types/review';
-import { AppRoute, RATING_COEF } from '../../const';
+import OfferCardList from '../../components/offers-card-list/offers-card-list';
+import { AppRoute, RATING_COEF, AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
+import { fetchOfferAction } from '../../store/api-actions';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
 
-type TOfferPageProps = {
-  fullOffers: TFullOffer[];
-  reviews: TReview[];
-  nearOffers: TOffer[];
-};
 
-function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
+  const {id: offerId} = useParams();
+  const offer = useAppSelector((state) => state.offer);
+  const reviews = useAppSelector((state) => state.reviews);
+  const offersNearby = useAppSelector((state) => state.nearPlaces);
+  const isAuthorizationStatus = useAppSelector((state) => state.authorizationStatus);
+  const dispatch = useAppDispatch();
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const {id } = useParams();
-  const selectedOffer = fullOffers.find((offer) => offer.id === id);
+  useEffect(() => {
+    dispatch(fetchOfferAction(offerId as string));
+  }, [dispatch, offerId]);
 
-  if (!selectedOffer) {
+  if (!offer) {
     return <Navigate to={AppRoute.NotFound}/>;
   }
 
   const onCardHover = () => {
-    setActiveCardId(selectedOffer.id);
+    setActiveCardId(offer.id);
   };
 
   return (
     <div className="page">
       <Helmet>
-        <title>{`6 cities - ${selectedOffer.title}`}</title>
+        <title>{`6 cities - ${offer.title}`}</title>
       </Helmet>
       <Header />
       <main className="page__main page__main--offer">
         <section className="offer">
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
-              {selectedOffer &&
-                selectedOffer.images.map((item) => (
+              {offer &&
+                offer.images.map((item) => (
                   <div
                     className="offer__image-wrapper"
-                    key={crypto.randomUUID()}
+                    key={item}
                   >
                     <img
                       className="offer__image"
@@ -58,13 +62,13 @@ function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Elem
           </div>
           <div className="offer__container container">
             <div className="offer__wrapper">
-              {selectedOffer && selectedOffer.isPremium && (
+              {offer && offer.isPremium && (
                 <div className="offer__mark">
                   <span>Premium</span>
                 </div>
               )}
               <div className="offer__name-wrapper">
-                <h1 className="offer__name">{selectedOffer && selectedOffer.title}</h1>
+                <h1 className="offer__name">{offer && offer.title}</h1>
                 <BookmarksButton
                   isActive={false}
                   size="big"
@@ -73,34 +77,34 @@ function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Elem
               </div>
               <div className="offer__rating rating">
                 <div className="offer__stars rating__stars">
-                  <span style={{ width: `${Math.round(selectedOffer.rating) * RATING_COEF}%` }}></span>
+                  <span style={{ width: `${Math.round(offer.rating) * RATING_COEF}%` }}></span>
                   <span className="visually-hidden">Rating</span>
                 </div>
-                <span className="offer__rating-value rating__value">{selectedOffer.rating}</span>
+                <span className="offer__rating-value rating__value">{offer.rating}</span>
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {selectedOffer && selectedOffer.type}
+                  {offer && offer.type}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
-                  {selectedOffer && selectedOffer.bedrooms} Bedrooms
+                  {offer && offer.bedrooms} Bedrooms
                 </li>
                 <li className="offer__feature offer__feature--adults">
-                  Max {selectedOffer && selectedOffer.maxAdults} adults
+                  Max {offer && offer.maxAdults} adults
                 </li>
               </ul>
               <div className="offer__price">
-                <b className="offer__price-value">&euro;{selectedOffer && selectedOffer.price}</b>
+                <b className="offer__price-value">&euro;{offer && offer.price}</b>
                 <span className="offer__price-text">&nbsp;night</span>
               </div>
               <div className="offer__inside">
                 <h2 className="offer__inside-title">What&apos;s inside</h2>
                 <ul className="offer__inside-list">
-                  {selectedOffer &&
-                    selectedOffer.goods.map((item) => (
+                  {offer &&
+                    offer.goods.map((item) => (
                       <li
                         className="offer__inside-item"
-                        key={crypto.randomUUID()}
+                        key={item}
                       >
                         {item}
                       </li>
@@ -112,36 +116,42 @@ function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Elem
                 <div className="offer__host-user user">
                   <div
                     className={`offer__avatar-wrapper offer__avatar-wrapper${
-                      selectedOffer && selectedOffer.host.isPro ? '--pro' : ''
+                      offer && offer.host.isPro ? '--pro' : ''
                     } user__avatar-wrapper`}
                   >
                     <img
                       className="offer__avatar user__avatar"
-                      src={selectedOffer && selectedOffer.host.avatarUrl}
+                      src={offer && offer.host.avatarUrl}
                       width="74"
                       height="74"
                       alt="Host avatar"
                     />
                   </div>
                   <span className="offer__user-name">
-                    {selectedOffer && selectedOffer.host.name}
+                    {offer && offer.host.name}
                   </span>
                   <span className="offer__user-status">
-                    {selectedOffer && selectedOffer.host.isPro ? 'Pro' : ''}
+                    {offer && offer.host.isPro ? 'Pro' : ''}
                   </span>
                 </div>
                 <div className="offer__description">
                   <p className="offer__text">
-                    {selectedOffer && selectedOffer.description}
+                    {offer && offer.description}
                   </p>
                 </div>
               </div>
-              <OfferReview reviews={reviews}/>
+              <section className="offer__reviews reviews">
+                <ReviewList reviews={reviews}/>
+                {isAuthorizationStatus === AuthorizationStatus.Auth &&
+                <ReviewForm
+                  offerId= {offerId as string}
+                />}
+              </section>
             </div>
           </div>
           <Map
-            location={nearOffers[0].city.location}
-            offers={nearOffers}
+            location={offersNearby[0].city.location}
+            offers={offersNearby}
             selectedOffer={activeCardId}
           />
         </section>
@@ -150,9 +160,12 @@ function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Elem
             <h2 className="near-places__title">
               Other places in the neighbourhood
             </h2>
-            <ListOffers
-              offers={nearOffers}
+            <OfferCardList
+              offers={offersNearby}
               onCardHover={onCardHover}
+              isMainOfferList = {false}
+              activeSorting = {'TopRated'}
+
             />
           </section>
         </div>

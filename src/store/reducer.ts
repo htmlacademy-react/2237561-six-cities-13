@@ -3,7 +3,7 @@ import { createReducer } from '@reduxjs/toolkit';
 import { TCity } from '../types/city';
 import { TReview } from '../types/review';
 import { TOffer, TFullOffer } from '../types/offer';
-import {allReviews} from '../components/offers-review/reviews-mocks';
+
 
 import {
   fetchOffers,
@@ -11,14 +11,17 @@ import {
   fetchOffer,
   fetchNearPlaces,
   fetchReviews,
-  dropOffer,
+  addReview,
+  dropSendingStatus,
   setActiveCity,
   fetchFavorites,
   requireAuthorization,
   setUserName,
 } from './actions';
 
-import { DEFAULT_LOCATION, AuthorizationStatus } from '../const';
+import { postReview } from './api-actions';
+
+import { DEFAULT_LOCATION, AuthorizationStatus, RequestStatus } from '../const';
 
 type InitialState = {
   offers: TOffer[];
@@ -29,18 +32,20 @@ type InitialState = {
   activeCity: TCity;
   isDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
+  sendReviewStatus: string;
   userName: string;
 };
 
 const initialState: InitialState = {
   offers: [],
   nearPlaces: [],
-  reviews: allReviews,
+  reviews: [],
   offer: null,
   favorites: [],
   activeCity: DEFAULT_LOCATION,
   isDataLoading: false,
   authorizationStatus: AuthorizationStatus.Unknown,
+  sendReviewStatus: RequestStatus.Unsent,
   userName: '',
 };
 
@@ -58,12 +63,23 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchNearPlaces, (state, action) => {
       state.nearPlaces = action.payload;
     })
-    .addCase(fetchReviews, (state) => {
-      state.reviews = allReviews;
+    .addCase(fetchReviews, (state, action) => {
+      state.reviews = action.payload;
     })
-    .addCase(dropOffer, (state) => {
-      state.offer = null;
-      state.nearPlaces = [];
+    .addCase(postReview.pending, (state) => {
+      state.sendReviewStatus = RequestStatus.Pending;
+    })
+    .addCase(postReview.fulfilled, (state) => {
+      state.sendReviewStatus = RequestStatus.Success;
+    })
+    .addCase(postReview.rejected, (state) => {
+      state.sendReviewStatus = RequestStatus.Error;
+    })
+    .addCase(dropSendingStatus, (state) => {
+      state.sendReviewStatus = RequestStatus.Unsent;
+    })
+    .addCase(addReview, (state, action) => {
+      state.reviews.push(action.payload);
     })
     .addCase(setActiveCity, (state, action) => {
       state.activeCity = action.payload;

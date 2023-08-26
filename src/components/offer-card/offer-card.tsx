@@ -4,13 +4,13 @@ import { TOffer } from '../../types/offer';
 import { AppRoute, RATING_COEF } from '../../const';
 import BookmarksButton from '../bookmark/favorite-bookmark';
 
-type TCitiesCardProps = {
+type TOfferCardProps = {
   offer: TOffer;
   onCardHover: (activeCard: string | null) => void;
   isMainOfferList?: boolean;
 }
 
-function CitiesCard({offer, onCardHover, isMainOfferList}: TCitiesCardProps): JSX.Element {
+function OfferCard({offer, onCardHover, isMainOfferList}: TOfferCardProps): JSX.Element {
 
   return (
     <article
@@ -63,4 +63,4 @@ function CitiesCard({offer, onCardHover, isMainOfferList}: TCitiesCardProps): JS
     </article>
   );
 }
-export default CitiesCard;
+export default OfferCard;

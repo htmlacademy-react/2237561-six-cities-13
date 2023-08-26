@@ -13,7 +13,6 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-
 export const GRADES: string[] = [
   'perfect',
   'good',
@@ -26,6 +25,7 @@ export const RATING_COEF = 20;
 
 export const MIN_COMMENTS_LENGTH = 50;
 export const MAX_COMMENTS_LENGTH = 300;
+
 export const DEFAULT_LOCATION = {
   location: {
     latitude: 48.85661,
@@ -37,6 +37,8 @@ export const DEFAULT_LOCATION = {
 export const MAX_NEAR_PLACES_COUNT = 3;
 
 export const TIMEOUT_SHOW_ERROR = 2000;
+
+export const MAX_REVIEWS_COUNT = 10;
 
 export const CITIES = [
   {
@@ -116,4 +118,9 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-
+export const enum RequestStatus {
+  Unsent = 'UNSENT',
+  Pending = 'PENDING',
+  Success = 'SUCCESS',
+  Error = 'ERROR'
+}
