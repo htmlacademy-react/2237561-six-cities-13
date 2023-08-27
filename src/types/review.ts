@@ -8,4 +8,8 @@ export type TReview = {
   date: string;
 };
 
+export type TReviewData = {
+  comment: string;
+  rating: number;
+}
 

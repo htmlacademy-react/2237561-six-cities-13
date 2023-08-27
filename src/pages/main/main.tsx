@@ -6,7 +6,7 @@ import MainEmpty from '../../components/main-empty/main-empty';
 import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
 import CitiesTabsSort from '../../components/cities-tabs/cities-tabs';
-import ListOffers from '../../components/cities-offers-list/cities-offers-list';
+import OfferCardList from '../../components/offers-card-list/offers-card-list';
 import Map from '../../components/map/map';
 import { TSorting } from '../../types/sorting';
 
@@ -51,7 +51,7 @@ function MainScreen(): JSX.Element {
                   activeSorting= {activeSorting}
                   onChange={(newSorting) => setActiveSorting(newSorting)}
                 />
-                <ListOffers
+                <OfferCardList
                   offers={cityOffers}
                   onCardHover={onCardHover}
                   isMainOfferList

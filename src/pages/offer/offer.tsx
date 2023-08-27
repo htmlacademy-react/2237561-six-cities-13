@@ -1,48 +1,66 @@
+import { useEffect } from 'react';
 import {Helmet} from 'react-helmet-async';
-import { Navigate } from 'react-router-dom';
 import {useState} from 'react';
 import { useParams } from 'react-router-dom';
 import Header from '../../components/header/header';
-import OfferReview from '../../components/offers-review/review';
+import ReviewList from '../../components/offer-review-list/offer-review-list';
+import ReviewForm from '../../components/offer-review-form/offer-review-form';
 import BookmarksButton from '../../components/bookmark/favorite-bookmark';
-import ListOffers from '../../components/cities-offers-list/cities-offers-list';
-import { TFullOffer, TOffer } from '../../types/offer';
-import { TReview } from '../../types/review';
-import { AppRoute, RATING_COEF } from '../../const';
+import OfferCardList from '../../components/offers-card-list/offers-card-list';
+import Spinner from '../../components/spinner/spinner';
+import { RATING_COEF, AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
+import { useAppSelector, useAppDispatch } from '../../hooks/index';
+import { fetchOfferAction, fetchNearPlacesAction, fetchReviewsAction } from '../../store/api-actions';
 
-type TOfferPageProps = {
-  fullOffers: TFullOffer[];
-  reviews: TReview[];
-  nearOffers: TOffer[];
-};
 
-function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Element {
+function OfferPage(): JSX.Element {
+  const dispatch = useAppDispatch();
+  const offerId = useParams().id;
+  const offer = useAppSelector((store) => store.offer);
+  const nearPlaces = useAppSelector((store) => store.nearPlaces);
+
+  const isOfferLoaded = useAppSelector((store) => store.isOfferDataLoading);
+  const isReviewsLoaded = useAppSelector((store) => store.isReviewsDataLoading);
+  const isNearByLoaded = useAppSelector((store) => store.isNearPlacesDataLoading);
+  const isAuthorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const neighborPlaces = nearPlaces?.slice(0, 3);
+
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
-  const {id } = useParams();
-  const selectedOffer = fullOffers.find((offer) => offer.id === id);
+  useEffect(() => {
+    let isOfferPageMounted = true;
+    if (offerId && isOfferPageMounted) {
+      dispatch(fetchOfferAction(offerId));
+      dispatch(fetchReviewsAction(offerId));
+      dispatch(fetchNearPlacesAction(offerId));
+    }
 
-  if (!selectedOffer) {
-    return <Navigate to={AppRoute.NotFound}/>;
-  }
+    return () => {
+      isOfferPageMounted = false;
+    };
+  }, [dispatch, offerId]);
 
   const onCardHover = () => {
-    setActiveCardId(selectedOffer.id);
+    setActiveCardId(offer.id);
   };
 
   return (
     <div className="page">
       <Helmet>
-        <title>{`6 cities - ${selectedOffer.title}`}</title>
+        <title>{`6 cities - ${offer.title}`}</title>
       </Helmet>
       <Header />
-      <main className="page__main page__main--offer">
-        <section className="offer">
-          <div className="offer__gallery-container container">
-            <div className="offer__gallery">
-              {selectedOffer &&
-                selectedOffer.images.map((item) => (
+      {isOfferLoaded || isReviewsLoaded || isNearByLoaded
+        ?
+        <Spinner />
+        :
+        <main className="page__main page__main--offer">
+          <section className="offer">
+            <div className="offer__gallery-container container">
+              <div className="offer__gallery">
+                {offer &&
+                offer.images.map((item) => (
                   <div
                     className="offer__image-wrapper"
                     key={crypto.randomUUID()}
@@ -54,109 +72,117 @@ function OfferPage({fullOffers, reviews, nearOffers}: TOfferPageProps): JSX.Elem
                     />
                   </div>
                 ))}
+              </div>
             </div>
-          </div>
-          <div className="offer__container container">
-            <div className="offer__wrapper">
-              {selectedOffer && selectedOffer.isPremium && (
-                <div className="offer__mark">
-                  <span>Premium</span>
+            <div className="offer__container container">
+              <div className="offer__wrapper">
+                {offer && offer.isPremium && (
+                  <div className="offer__mark">
+                    <span>Premium</span>
+                  </div>
+                )}
+                <div className="offer__name-wrapper">
+                  <h1 className="offer__name">{offer && offer.title}</h1>
+                  <BookmarksButton
+                    isActive={false}
+                    size="big"
+                    page="offer"
+                  />
                 </div>
-              )}
-              <div className="offer__name-wrapper">
-                <h1 className="offer__name">{selectedOffer && selectedOffer.title}</h1>
-                <BookmarksButton
-                  isActive={false}
-                  size="big"
-                  page="offer"
-                />
-              </div>
-              <div className="offer__rating rating">
-                <div className="offer__stars rating__stars">
-                  <span style={{ width: `${Math.round(selectedOffer.rating) * RATING_COEF}%` }}></span>
-                  <span className="visually-hidden">Rating</span>
+                <div className="offer__rating rating">
+                  <div className="offer__stars rating__stars">
+                    <span style={{ width: `${Math.round(offer.rating) * RATING_COEF}%` }}></span>
+                    <span className="visually-hidden">Rating</span>
+                  </div>
+                  <span className="offer__rating-value rating__value">{offer.rating}</span>
                 </div>
-                <span className="offer__rating-value rating__value">{selectedOffer.rating}</span>
-              </div>
-              <ul className="offer__features">
-                <li className="offer__feature offer__feature--entire">
-                  {selectedOffer && selectedOffer.type}
-                </li>
-                <li className="offer__feature offer__feature--bedrooms">
-                  {selectedOffer && selectedOffer.bedrooms} Bedrooms
-                </li>
-                <li className="offer__feature offer__feature--adults">
-                  Max {selectedOffer && selectedOffer.maxAdults} adults
-                </li>
-              </ul>
-              <div className="offer__price">
-                <b className="offer__price-value">&euro;{selectedOffer && selectedOffer.price}</b>
-                <span className="offer__price-text">&nbsp;night</span>
-              </div>
-              <div className="offer__inside">
-                <h2 className="offer__inside-title">What&apos;s inside</h2>
-                <ul className="offer__inside-list">
-                  {selectedOffer &&
-                    selectedOffer.goods.map((item) => (
+                <ul className="offer__features">
+                  <li className="offer__feature offer__feature--entire">
+                    {offer && offer.type}
+                  </li>
+                  <li className="offer__feature offer__feature--bedrooms">
+                    {offer && offer.bedrooms} Bedrooms
+                  </li>
+                  <li className="offer__feature offer__feature--adults">
+                  Max {offer && offer.maxAdults} adults
+                  </li>
+                </ul>
+                <div className="offer__price">
+                  <b className="offer__price-value">&euro;{offer && offer.price}</b>
+                  <span className="offer__price-text">&nbsp;night</span>
+                </div>
+                <div className="offer__inside">
+                  <h2 className="offer__inside-title">What&apos;s inside</h2>
+                  <ul className="offer__inside-list">
+                    {offer &&
+                    offer.goods.map((item) => (
                       <li
                         className="offer__inside-item"
-                        key={crypto.randomUUID()}
+                        key={item}
                       >
                         {item}
                       </li>
                     ))}
-                </ul>
-              </div>
-              <div className="offer__host">
-                <h2 className="offer__host-title">Meet the host</h2>
-                <div className="offer__host-user user">
-                  <div
-                    className={`offer__avatar-wrapper offer__avatar-wrapper${
-                      selectedOffer && selectedOffer.host.isPro ? '--pro' : ''
-                    } user__avatar-wrapper`}
-                  >
-                    <img
-                      className="offer__avatar user__avatar"
-                      src={selectedOffer && selectedOffer.host.avatarUrl}
-                      width="74"
-                      height="74"
-                      alt="Host avatar"
-                    />
+                  </ul>
+                </div>
+                <div className="offer__host">
+                  <h2 className="offer__host-title">Meet the host</h2>
+                  <div className="offer__host-user user">
+                    <div
+                      className={`offer__avatar-wrapper offer__avatar-wrapper${
+                        offer && offer.host.isPro ? '--pro' : ''
+                      } user__avatar-wrapper`}
+                    >
+                      <img
+                        className="offer__avatar user__avatar"
+                        src={offer && offer.host.avatarUrl}
+                        width="74"
+                        height="74"
+                        alt="Host avatar"
+                      />
+                    </div>
+                    <span className="offer__user-name">
+                      {offer && offer.host.name}
+                    </span>
+                    <span className="offer__user-status">
+                      {offer && offer.host.isPro ? 'Pro' : ''}
+                    </span>
                   </div>
-                  <span className="offer__user-name">
-                    {selectedOffer && selectedOffer.host.name}
-                  </span>
-                  <span className="offer__user-status">
-                    {selectedOffer && selectedOffer.host.isPro ? 'Pro' : ''}
-                  </span>
+                  <div className="offer__description">
+                    <p className="offer__text">
+                      {offer && offer.description}
+                    </p>
+                  </div>
                 </div>
-                <div className="offer__description">
-                  <p className="offer__text">
-                    {selectedOffer && selectedOffer.description}
-                  </p>
-                </div>
+                <section className="offer__reviews reviews">
+                  <ReviewList/>
+                  {isAuthorizationStatus === AuthorizationStatus.Auth &&
+                <ReviewForm
+                  offerId= {offerId as string}
+                />}
+                </section>
               </div>
-              <OfferReview reviews={reviews}/>
             </div>
-          </div>
-          <Map
-            location={nearOffers[0].city.location}
-            offers={nearOffers}
-            selectedOffer={activeCardId}
-          />
-        </section>
-        <div className="container">
-          <section className="near-places places">
-            <h2 className="near-places__title">
-              Other places in the neighbourhood
-            </h2>
-            <ListOffers
-              offers={nearOffers}
-              onCardHover={onCardHover}
+            <Map
+              location={neighborPlaces[0].city.location}
+              offers={neighborPlaces}
+              selectedOffer={activeCardId}
             />
           </section>
-        </div>
-      </main>
+          <div className="container">
+            <section className="near-places places">
+              <h2 className="near-places__title">
+              Other places in the neighbourhood
+              </h2>
+              <OfferCardList
+                offers={neighborPlaces}
+                onCardHover={onCardHover}
+                isMainOfferList = {false}
+                activeSorting = {'Popular'}
+              />
+            </section>
+          </div>
+        </main>}
     </div>
   );
 }
