@@ -8,6 +8,9 @@ import {
   fetchNearPlaces,
   fetchReviews,
   setLoadingStatus,
+  setOfferDataLoadingStatus,
+  setReviewsDataLoadingStatus,
+  setNearPlacesDataLoadingStatus,
   addReview,
   requireAuthorization,
   redirectToRoute,
@@ -36,42 +39,78 @@ export const fetchOffersAction = createAsyncThunk<
 });
 
 export const fetchOfferAction = createAsyncThunk<
+void,
+string,
+{
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(
+  `${NameSpace.Offer}/fetchOffer`,
+  async (offerId, { dispatch, extra: api }) => {
+    try {
+      const { data } = await api.get<TFullOffer>(
+        `${APIRoute.Offers}/${offerId}`
+      );
+      dispatch(setOfferDataLoadingStatus(false));
+      dispatch(fetchOffer(data));
+    } catch {
+      dispatch(redirectToRoute(AppRoute.NotFound));
+    }
+  }
+);
+
+export const fetchReviewsAction = createAsyncThunk<
+void,
+string,
+{
+  dispatch: TAppDispatch;
+  state: TState;
+  extra: AxiosInstance;
+}
+>(`${NameSpace.Reviews}/fetchReviews`,
+  async (offerId, { dispatch, extra: api }) => {
+    const { data } = await api.get<TReview[]>(`${APIRoute.Reviews}/${offerId}`);
+    dispatch(setReviewsDataLoadingStatus(false));
+    dispatch(fetchReviews(data));
+  }
+);
+
+export const postReview = createAsyncThunk<
   void,
-  string,
+  { reviewData: TReviewData; offerId: TOffer['id'] },
   {
     dispatch: TAppDispatch;
     state: TState;
     extra: AxiosInstance;
   }
 >(
-  `${NameSpace.Offer}/fetchOffer`,
-  async (id, { dispatch, extra: api }) => {
-    dispatch(setLoadingStatus(true));
-    const { data: offer } = await api.get<TFullOffer>(
-      `${APIRoute.Offers}/${id}`
+  `${NameSpace.Reviews}/postReview`,
+  async ({ reviewData, offerId }, { dispatch, extra: api }) => {
+    const { data } = await api.post<TReview>(
+      `${APIRoute.Reviews}/${offerId}`,
+      reviewData
     );
-    const { data: reviews } = await api.get<TReview[]>(
-      `${APIRoute.Reviews}/${id}`
-    );
-    const { data: nearby } = await api.get<TOffer[]>(
-      `${APIRoute.Offers}/${id}${APIRoute.NearPlaces}`
-    );
-    dispatch(setLoadingStatus(false));
-    dispatch(fetchOffer(offer));
-    dispatch(fetchReviews(reviews));
-    dispatch(fetchNearPlaces(nearby));
+    dispatch(addReview(data));
   }
 );
 
-export const postReview = createAsyncThunk<void, {reviewData: TReviewData; offerId: TOffer['id']}, {
+export const fetchNearPlacesAction = createAsyncThunk<
+void,
+string,
+{
   dispatch: TAppDispatch;
   state: TState;
   extra: AxiosInstance;
-}>(
-  `${NameSpace.Reviews}/postReview`,
-  async ({reviewData, offerId}, {dispatch, extra: api}) => {
-    const { data } = await api.post<TReview>(`${APIRoute.Reviews}/${offerId}`, reviewData);
-    dispatch(addReview(data));
+}
+>(`${NameSpace.NearPlaces}/fetchNearPlaces`,
+  async (offerId, { dispatch, extra: api }) => {
+    const { data } = await api.get<TOffer[]>(
+      `${APIRoute.Offers}/${offerId}${APIRoute.NearPlaces}`
+    );
+    dispatch(setNearPlacesDataLoadingStatus(false));
+    dispatch(fetchNearPlaces(data));
   }
 );
 

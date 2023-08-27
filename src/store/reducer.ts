@@ -13,13 +13,16 @@ import {
   fetchReviews,
   addReview,
   dropSendingStatus,
+  setOfferDataLoadingStatus,
+  setReviewsDataLoadingStatus,
+  setNearPlacesDataLoadingStatus,
   setActiveCity,
   fetchFavorites,
   requireAuthorization,
   setUserName,
 } from './actions';
 
-import { postReview } from './api-actions';
+//import { postReview } from './api-actions';
 
 import { DEFAULT_LOCATION, AuthorizationStatus, RequestStatus } from '../const';
 
@@ -27,10 +30,13 @@ type InitialState = {
   offers: TOffer[];
   nearPlaces: TOffer[];
   reviews: TReview[];
-  offer: TFullOffer | null;
+  offer: TFullOffer;
   favorites: TOffer[];
   activeCity: TCity;
   isDataLoading: boolean;
+  isOfferDataLoading: boolean;
+  isReviewsDataLoading: boolean;
+  isNearPlacesDataLoading: boolean;
   authorizationStatus: AuthorizationStatus;
   sendReviewStatus: string;
   userName: string;
@@ -40,10 +46,13 @@ const initialState: InitialState = {
   offers: [],
   nearPlaces: [],
   reviews: [],
-  offer: null,
+  offer: {} as TFullOffer,
   favorites: [],
   activeCity: DEFAULT_LOCATION,
   isDataLoading: false,
+  isOfferDataLoading: true,
+  isReviewsDataLoading: true,
+  isNearPlacesDataLoading: true,
   authorizationStatus: AuthorizationStatus.Unknown,
   sendReviewStatus: RequestStatus.Unsent,
   userName: '',
@@ -66,14 +75,14 @@ export const reducer = createReducer(initialState, (builder) => {
     .addCase(fetchReviews, (state, action) => {
       state.reviews = action.payload;
     })
-    .addCase(postReview.pending, (state) => {
-      state.sendReviewStatus = RequestStatus.Pending;
+    .addCase(setOfferDataLoadingStatus, (state, action) => {
+      state.isOfferDataLoading = action.payload;
     })
-    .addCase(postReview.fulfilled, (state) => {
-      state.sendReviewStatus = RequestStatus.Success;
+    .addCase(setReviewsDataLoadingStatus, (state, action) => {
+      state.isReviewsDataLoading = action.payload;
     })
-    .addCase(postReview.rejected, (state) => {
-      state.sendReviewStatus = RequestStatus.Error;
+    .addCase(setNearPlacesDataLoadingStatus, (state, action) => {
+      state.isNearPlacesDataLoading = action.payload;
     })
     .addCase(dropSendingStatus, (state) => {
       state.sendReviewStatus = RequestStatus.Unsent;

@@ -24,6 +24,18 @@ export const addReview = createAction<TReview>(`${NameSpace.Reviews}/addReview`)
 
 export const dropSendingStatus = createAction(`${NameSpace.Reviews}/dropSendingStatus`);
 
+export const setOfferDataLoadingStatus = createAction<boolean>(
+  `${NameSpace.Data}/setOfferDataLoadingStatus`
+);
+
+export const setReviewsDataLoadingStatus = createAction<boolean>(
+  `${NameSpace.Data}/setReviewsDataLoadingStatus`
+);
+
+export const setNearPlacesDataLoadingStatus = createAction<boolean>(
+  `${NameSpace.Data}/setNearPlacesDataLoadingStatus`
+);
+
 export const setActiveCity = createAction<TCity>(
   `${NameSpace.Offers}/setActiveCity`
 );
