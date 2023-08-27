@@ -40,6 +40,8 @@ export const TIMEOUT_SHOW_ERROR = 2000;
 
 export const MAX_REVIEWS_COUNT = 10;
 
+export const DEFAULT_RATING = 0;
+
 export const CITIES = [
   {
     location: {

@@ -19,7 +19,6 @@ function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
   const offerId = useParams().id;
   const offer = useAppSelector((store) => store.offer);
-  const reviews = useAppSelector((store) => store.reviews);
   const nearPlaces = useAppSelector((store) => store.nearPlaces);
 
   const isOfferLoaded = useAppSelector((store) => store.isOfferDataLoading);
@@ -156,7 +155,7 @@ function OfferPage(): JSX.Element {
                   </div>
                 </div>
                 <section className="offer__reviews reviews">
-                  <ReviewList reviews={reviews}/>
+                  <ReviewList/>
                   {isAuthorizationStatus === AuthorizationStatus.Auth &&
                 <ReviewForm
                   offerId= {offerId as string}

@@ -1,54 +1,45 @@
-import { Fragment,FormEvent, ChangeEvent, useState, useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/index';
-import { dropSendingStatus } from '../../store/actions';
+import { Fragment, FormEvent, ChangeEventHandler, useState } from 'react';
+import { useAppDispatch } from '../../hooks/index';
 import { postReview } from '../../store/api-actions';
-import { GRADES, MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH, RequestStatus } from '../../const';
-import { TOffer } from '../../types/offer';
+import { GRADES, MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH, DEFAULT_RATING } from '../../const';
 
 type ReviewFormProps = {
-  offerId: TOffer['id'];
+  offerId: string;
 }
 
 function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
-  const [review, setReview] = useState('');
-  const [rating, setRating] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
   const dispatch = useAppDispatch();
-  const sendingStatus = useAppSelector((state) => state.sendReviewStatus);
+  const [review, setReview] = useState('');
+  const [rating, setRating] = useState(0);
 
-  const isValid =
+  const isValid = rating !== DEFAULT_RATING &&
     review.length >= MIN_COMMENTS_LENGTH &&
-    review.length <= MAX_COMMENTS_LENGTH &&
-    rating !== '';
+    review.length <= MAX_COMMENTS_LENGTH;
 
-  const handleTextareaChange = (evt: ChangeEvent<HTMLTextAreaElement>) => {
-    setReview(evt.target.value);
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
+    target,
+  }): void => {
+    setRating(Number(target.value));
   };
 
-  const handleRatingtChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    setRating(evt.target.value);
+  const handleTexAreaChange: ChangeEventHandler<HTMLTextAreaElement> = ({
+    target,
+  }): void => {
+    setReview(target.value);
   };
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    dispatch(postReview({
+      offerId: offerId,
+      comment: review,
+      rating: rating,
+    }));
 
-    dispatch(postReview({reviewData: {comment: review, rating: Number(rating)}, offerId}));
+    setRating(0);
+    setReview('');
   };
 
-  useEffect(() => {
-    switch (sendingStatus) {
-      case RequestStatus.Success:
-        setReview('');
-        setRating('');
-        dispatch(dropSendingStatus());
-        break;
-      case RequestStatus.Pending:
-        setIsSubmitting(true);
-        break;
-      default:
-        setIsSubmitting(false);
-    }
-  }, [sendingStatus, dispatch]);
 
   return (
     <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
@@ -58,7 +49,6 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
       <div className="reviews__rating-form form__rating">
         {GRADES.map((grade, index) => {
           const gradeValue: number = GRADES.length - index;
-
           return (
             <Fragment key={grade}>
               <input
@@ -68,8 +58,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
                 id={`${gradeValue}-stars`}
                 type="radio"
                 checked={Number(rating) === gradeValue}
-                onChange={handleRatingtChange}
-                disabled={isSubmitting}
+                onChange={handleInputChange}
               />
               <label
                 className="reviews__rating-label form__rating-label"
@@ -90,8 +79,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         name="review"
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
-        onChange={handleTextareaChange}
-        disabled={isSubmitting}
+        onChange={handleTexAreaChange}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -107,7 +95,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid || isSubmitting}
+          disabled={!isValid}
         >
           Submit
         </button>
@@ -115,4 +103,5 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
     </form>
   );
 }
+
 export default ReviewForm;

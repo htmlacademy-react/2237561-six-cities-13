@@ -19,9 +19,10 @@ import {
 
 import { saveToken, dropToken } from '../services/token';
 import { TOffer, TFullOffer } from '../types/offer';
-import { TReview, TReviewData } from '../types/review';
+import { TReview } from '../types/review';
 import { AuthData } from '../types/auth-data';
 import { UserData } from '../types/user-data';
+import { getToken } from './../services/token';
 
 export const fetchOffersAction = createAsyncThunk<
   void,
@@ -79,7 +80,11 @@ string,
 
 export const postReview = createAsyncThunk<
   void,
-  { reviewData: TReviewData; offerId: TOffer['id'] },
+  {
+    comment: string;
+    rating: number;
+    offerId: string;
+  },
   {
     dispatch: TAppDispatch;
     state: TState;
@@ -87,12 +92,17 @@ export const postReview = createAsyncThunk<
   }
 >(
   `${NameSpace.Reviews}/postReview`,
-  async ({ reviewData, offerId }, { dispatch, extra: api }) => {
-    const { data } = await api.post<TReview>(
+  async ({ comment, rating, offerId }, { dispatch, extra: api }) => {
+    const token = getToken();
+    const response = await api.post<TReview>(
       `${APIRoute.Reviews}/${offerId}`,
-      reviewData
+      {
+        comment,
+        rating,
+      },
+      { headers: { 'X-token': token } }
     );
-    dispatch(addReview(data));
+    dispatch(addReview(response.data));
   }
 );
 

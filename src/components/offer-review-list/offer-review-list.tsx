@@ -1,19 +1,13 @@
-import { RATING_COEF, MAX_REVIEWS_COUNT } from '../../const';
-import {TReview} from '../../types/review';
+import { RATING_COEF } from '../../const';
+import { useAppSelector } from '../../hooks/index';
+import { sortReviewsByDate } from '../../utils/sort-review';
 
-type TReviewListProps = {
-  reviews: TReview[];
-};
 
-export default function ReviewList({reviews}: TReviewListProps): JSX.Element {
+export default function ReviewList(): JSX.Element {
+  const reviews = useAppSelector((store) => store.reviews);
 
   const formatDate = (date: string, locales = 'en-US'): string =>
     new Date(date).toLocaleString(locales, { month: 'long', year: 'numeric' });
-
-  const sortReviews = reviews
-    .slice()
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, MAX_REVIEWS_COUNT);
 
   return (
     <>
@@ -23,7 +17,7 @@ export default function ReviewList({reviews}: TReviewListProps): JSX.Element {
       </h2>
 
       <ul className="reviews__list">
-        {sortReviews &&
+        {sortReviewsByDate(reviews) &&
           reviews.map((review) => (
             <li className="reviews__item" key={review.id}>
               <div className="reviews__user user">
