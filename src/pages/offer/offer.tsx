@@ -12,7 +12,6 @@ import { RATING_COEF, AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
 import { fetchOfferAction, fetchNearPlacesAction, fetchReviewsAction } from '../../store/api-actions';
-import {nearByCities} from '../../utils/nearby';
 
 
 function OfferPage(): JSX.Element {
@@ -25,6 +24,7 @@ function OfferPage(): JSX.Element {
   const isReviewsLoaded = useAppSelector((store) => store.isReviewsDataLoading);
   const isNearByLoaded = useAppSelector((store) => store.isNearPlacesDataLoading);
   const isAuthorizationStatus = useAppSelector((store) => store.authorizationStatus);
+  const neighborPlaces = nearPlaces?.slice(0, 3);
 
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
@@ -164,8 +164,8 @@ function OfferPage(): JSX.Element {
               </div>
             </div>
             <Map
-              location={nearByCities(nearPlaces)[0].city.location}
-              offers={nearByCities(nearPlaces)}
+              location={neighborPlaces[0].city.location}
+              offers={neighborPlaces}
               selectedOffer={activeCardId}
             />
           </section>
@@ -175,10 +175,10 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
               </h2>
               <OfferCardList
-                offers={nearByCities(nearPlaces)}
+                offers={neighborPlaces}
                 onCardHover={onCardHover}
                 isMainOfferList = {false}
-                activeSorting = {'TopRated'}
+                activeSorting = {'Popular'}
               />
             </section>
           </div>
