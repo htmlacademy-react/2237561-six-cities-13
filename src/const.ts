@@ -42,6 +42,8 @@ export const MAX_REVIEWS_COUNT = 10;
 
 export const DEFAULT_RATING = 0;
 
+export const DEFFAULT_IMG_AVATAR = './img/avatar.svg';
+
 export const CITIES = [
   {
     location: {
@@ -93,21 +95,19 @@ export const CITIES = [
   }
 ];
 
-export const SortType = {
-  Popular: 'Popular',
-  LowToHigh: 'Price: low to high',
-  HighToLow: 'Price: high to low',
-  TopRated: 'Top rated first',
-} as const;
+export enum SortType {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first'
+}
 
 export enum NameSpace {
   Offers = 'OFFERS',
   Offer = 'OFFER',
-  NearPlaces = 'NEAR_PLACES',
-  Reviews = 'REVIEWS',
-  Favorites = 'FAVORITES',
   User = 'USER',
-  Data= 'DATA',
+  App = 'APP',
+  Favorites = 'FAVORITES',
   }
 
 export enum APIRoute {
@@ -126,3 +126,16 @@ export const enum RequestStatus {
   Success = 'SUCCESS',
   Error = 'ERROR'
 }
+
+export const CardClass = {
+  CITY: {
+    name: 'cities',
+    width: 260,
+    height: 200
+  },
+  FAVORITES: {
+    name: 'favorites',
+    width: 150,
+    height: 110
+  },
+} as const;

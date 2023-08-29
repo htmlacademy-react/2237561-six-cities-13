@@ -1,66 +1,83 @@
+import React from 'react';
 import { Link } from 'react-router-dom';
-import cn from 'classnames';
 import { TOffer } from '../../types/offer';
 import { AppRoute, RATING_COEF } from '../../const';
-import BookmarksButton from '../bookmark/favorite-bookmark';
+import FavoriteBookmarkButton from '../favorite-bookmark/favorite-bookmark';
+import { selectOffer } from '../../store/offers-data/offers-data';
+import { useAppDispatch } from '../../hooks/index';
+
+type TCardClass = {
+  name: string;
+  width: number;
+  height: number;
+};
 
 type TOfferCardProps = {
   offer: TOffer;
-  onCardHover: (activeCard: string | null) => void;
-  isMainOfferList?: boolean;
-}
+  cardClass: TCardClass;
+};
 
-function OfferCard({offer, onCardHover, isMainOfferList}: TOfferCardProps): JSX.Element {
+function OfferCard({ offer, cardClass }: TOfferCardProps): JSX.Element {
+  const dispatch = useAppDispatch();
+  const {
+    price,
+    previewImage,
+    title,
+    isPremium,
+    rating,
+    type,
+    id,
+    isFavorite,
+  } = offer;
+  const { name, width, height } = cardClass;
 
   return (
     <article
-      className={cn(
-        'place-card',
-        {'cities__card': isMainOfferList},
-        {'near-places__card': !isMainOfferList}
-      )}
-      onMouseOver={() => onCardHover(offer.id)}
-      onMouseOut={() => onCardHover(null)}
+      className={`${name}__card place-card`}
+      onMouseEnter={() => dispatch(selectOffer(offer.id))}
+      onMouseOut={() => dispatch(selectOffer(null))}
     >
-      {offer.isPremium && (
+      {isPremium && (
         <div className="place-card__mark">
           <span>Premium</span>
         </div>
       )}
-      <div
-        className={cn(
-          'place-card__image-wrapper',
-          {'cities__image-wrapper': isMainOfferList},
-          {'near-places__image-wrapper': !isMainOfferList}
-        )}
-      >
-        <img className="place-card__image" src={offer.previewImage} width="260" height="200" alt={offer.title} />
-
+      <div className={`${name}__image-wrapper place-card__image-wrapper`}>
+        <Link to={`${AppRoute.Offer}${id}`}>
+          <img
+            className="place-card__image"
+            src={previewImage}
+            width={width}
+            height={height}
+            alt="Place image"
+          />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
           <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{offer.price}</b>
+            <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <BookmarksButton
-            isActive={offer.isFavorite ? '__bookmark-button--active' : false}
-            size="small"
-            page="place-card"
+          <FavoriteBookmarkButton
+            offerId={id}
+            isFavorite={isFavorite}
+            isBigSize={false}
           />
         </div>
         <div className="place-card__rating rating">
           <div className="place-card__stars rating__stars">
-            <span style={{ width: `${Math.round(offer.rating) * RATING_COEF}%` }}/>
+            <span style={{ width: `${Math.round(rating) * RATING_COEF}%` }} />
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
-        <Link to={`${AppRoute.Offer}${offer.id}`}>
-          <h2 className="place-card__name">{offer.title}</h2>
-        </Link>
-        <p className="place-card__type">{offer.type}</p>
+        <h2 className="place-card__name">
+          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
+        </h2>
+        <p className="place-card__type">{type}</p>
       </div>
     </article>
   );
 }
-export default OfferCard;
+const MemoOfferCard = React.memo(OfferCard);
+export default MemoOfferCard;

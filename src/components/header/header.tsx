@@ -1,13 +1,12 @@
+import {AuthorizationStatus } from '../../const';
+import SignIn from '../header-sign-in/header-sign-in';
+import SignOut from '../header-sign-out/header-sign-out';
 import Logo from '../../components/logo/logo';
-import { useAppSelector } from '../../hooks/index';
-import { AuthorizationStatus } from '../../const';
-import SignIn from '../sign-in/sign-in';
-import SignOut from '../sign-out/sign-out';
+import { useAppSelector } from '../../hooks';
+import { getAuthorizationStatus } from '../../store/user-process/selectors';
 
 function Header(): JSX.Element {
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
   return (
     <header className="header">
@@ -18,7 +17,7 @@ function Header(): JSX.Element {
           </div>
           <nav className="header__nav">
             <ul className="header__nav-list">
-              {authorizationStatus === AuthorizationStatus.Auth ? (
+              {authStatus === AuthorizationStatus.Auth ? (
                 <SignOut />
               ) : (
                 <SignIn />

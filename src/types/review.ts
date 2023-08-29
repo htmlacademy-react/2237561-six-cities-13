@@ -1,8 +1,8 @@
-import {TUser} from './user';
+import {TUserData} from './user-data';
 
 export type TReview = {
   id: string;
-  user: TUser;
+  user: TUserData;
   rating: number;
   comment: string;
   date: string;

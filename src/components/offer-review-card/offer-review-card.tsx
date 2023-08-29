@@ -1,14 +1,11 @@
-import ReviewForm from '../offers-review-form/review-form';
 import { TReview } from '../../types/review';
 import { RATING_COEF } from '../../const';
 
-type OfferReviewProps = {
-  reviews: TReview[];
+type TOfferReviewProps = {
+  reviews: TReview[] | null;
 };
 
-export default function OfferReview({
-  reviews,
-}: OfferReviewProps): JSX.Element {
+export default function OfferReviewCard({ reviews }: TOfferReviewProps): JSX.Element {
   const formatDate = (date: string, locales = 'en-US'): string =>
     new Date(date).toLocaleString(locales, { month: 'long', year: 'numeric' });
 
@@ -55,8 +52,6 @@ export default function OfferReview({
             </li>
           ))}
       </ul>
-
-      <ReviewForm />
     </section>
   );
 }

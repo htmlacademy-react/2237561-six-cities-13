@@ -1,13 +1,13 @@
 import { Fragment, FormEvent, ChangeEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../hooks/index';
-import { postReview } from '../../store/api-actions';
+import { postReviewAction } from '../../store/api-actions';
 import { GRADES, MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH, DEFAULT_RATING } from '../../const';
 
-type ReviewFormProps = {
+type TReviewFormProps = {
   offerId: string;
 }
 
-function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
+function ReviewForm({offerId}: TReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
@@ -30,7 +30,7 @@ function ReviewForm({offerId}: ReviewFormProps): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(postReview({
+    dispatch(postReviewAction({
       offerId: offerId,
       comment: review,
       rating: rating,

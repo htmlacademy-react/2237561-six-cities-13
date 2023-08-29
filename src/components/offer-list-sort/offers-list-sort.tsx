@@ -1,17 +1,14 @@
-import { useState, KeyboardEvent } from 'react';
+import React, { useState, KeyboardEvent } from 'react';
 import cn from 'classnames';
 import { SortType } from '../../const';
-import { TSorting } from '../../types/sorting';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
+import { getSort } from '../../store/offers-data/selectors';
+import { changeSort } from '../../store/offers-data/offers-data';
 
-type OfferListSortProps = {
-  activeSorting: TSorting;
-  onChange: (newSorting: TSorting) => void;
-};
-export function OffersListSort({
-  activeSorting,
-  onChange,
-}: OfferListSortProps): JSX.Element {
+export function OffersListSort(): JSX.Element {
   const [isOpened, setIsOpened] = useState(false);
+  const sortType = useAppSelector(getSort);
+  const dispatch = useAppDispatch();
 
   function handleKeydown(evt: KeyboardEvent) {
     if (evt.key === 'Escape' && isOpened) {
@@ -24,10 +21,6 @@ export function OffersListSort({
     setIsOpened((prevIsOpened) => !prevIsOpened);
   }
 
-  function hanleSortItemClick(type: TSorting) {
-    onChange(type);
-    setIsOpened(false);
-  }
   return (
     <form
       className="places__sorting"
@@ -35,13 +28,13 @@ export function OffersListSort({
       method="get"
       onKeyDown={handleKeydown}
     >
-      <span className="places__sorting-caption">Sort by  </span>
+      <span className="places__sorting-caption">Sort by </span>
       <span
         className="places__sorting-type"
         tabIndex={0}
         onClick={handleTypeClick}
       >
-        {SortType[activeSorting]}
+        {sortType}
         <svg className="places__sorting-arrow" width="7" height="4">
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
@@ -51,16 +44,14 @@ export function OffersListSort({
           'places__options--opened': isOpened,
         })}
       >
-        {(
-          Object.entries(SortType) as [TSorting, (typeof SortType)[TSorting]][]
-        ).map(([type, label]) => (
+        {Object.entries(SortType).map(([key, label]) => (
           <li
-            key={type}
+            key={key}
             className={cn('places__option', {
-              'places__option--active': activeSorting === type,
+              'places__option--active': sortType === label,
             })}
             tabIndex={0}
-            onClick={() => hanleSortItemClick(type)}
+            onClick={() => dispatch(changeSort(label))}
           >
             {label}
           </li>
@@ -69,5 +60,5 @@ export function OffersListSort({
     </form>
   );
 }
-
-export default OffersListSort;
+const MemoOffersListSort = React.memo(OffersListSort);
+export default MemoOffersListSort;
