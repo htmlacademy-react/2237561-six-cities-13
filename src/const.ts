@@ -11,6 +11,8 @@ export const RATING_COEF = 20;
 export const MIN_COMMENTS_LENGTH = 50;
 export const MAX_COMMENTS_LENGTH = 300;
 
+export const REVIEW_LIMIT = 10;
+
 export const DEFAULT_LOCATION = {
   location: {
     latitude: 48.85661,
