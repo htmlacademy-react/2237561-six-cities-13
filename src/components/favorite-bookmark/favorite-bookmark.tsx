@@ -50,9 +50,9 @@ export default function FavoriteBookmarkButton({
       onClick={handleButtonClick}
     >
       <svg
-        className="place-card__bookmark-icon"
-        width={isBigSize ? '31' : '33'}
-        height={isBigSize ? '18' : '19'}
+        className={isBigSize ? 'offer__bookmark-icon' : 'place-card__bookmark-icon'}
+        width={isBigSize ? '31' : '18'}
+        height={isBigSize ? '33' : '19'}
       >
         <use xlinkHref="#icon-bookmark"></use>
       </svg>

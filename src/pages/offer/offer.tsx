@@ -10,7 +10,6 @@ import Spinner from '../../components/spinner/spinner';
 import { RATING_COEF, AuthorizationStatus, CardClass, MAX_NEAR_PLACES_COUNT } from '../../const';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
-import { getSelectedOfferId } from '../../store/offers-data/selectors';
 import { fetchOfferAction, fetchNearPlacesAction, fetchReviewsAction } from '../../store/api-actions';
 import { dropOffer } from '../../store/offer-data/offer-data';
 import { getOfferDataLoading, getNearOffers, getOffer, getReviews } from '../../store/offer-data/selectors';
@@ -26,11 +25,10 @@ function OfferPage(): JSX.Element {
   const currentOffer = useAppSelector(getOffer);
   const isFullOfferDataLoading = useAppSelector(getOfferDataLoading);
   const nearPlaces = useAppSelector(getNearOffers);
-  const selectedOfferId = useAppSelector(getSelectedOfferId);
 
   const reviews = useAppSelector(getReviews);
 
-  const neighborPlaces = nearPlaces?.slice(0, MAX_NEAR_PLACES_COUNT);
+  const neighborPlaces = nearPlaces.slice(0, MAX_NEAR_PLACES_COUNT);
 
   useEffect(() => {
     if (offerId) {
@@ -82,7 +80,7 @@ function OfferPage(): JSX.Element {
           <div className="offer__container container">
             <div className="offer__wrapper">
               { isPremium &&
-              <div className="property__mark">
+              <div className="offer__mark">
                 <span>Premium</span>
               </div>}
               <div className="offer__name-wrapper">
@@ -167,9 +165,9 @@ function OfferPage(): JSX.Element {
             </div>
           </div>
           <Map
-            location={neighborPlaces[0].city.location}
-            offers={neighborPlaces}
-            selectedOffer={selectedOfferId}
+            city={currentOffer.city}
+            offers={neighborPlaces.concat(currentOffer)}
+            selectedOffer={currentOffer.id}
           />
         </section>
         <div className="container">
@@ -178,7 +176,7 @@ function OfferPage(): JSX.Element {
               Other places in the neighbourhood
             </h2>
             <div className="near-places__list places__list">
-              {nearPlaces && nearPlaces.map((item) => (
+              {neighborPlaces && neighborPlaces.map((item) => (
                 <OfferCard
                   key={item.id}
                   offer={item}

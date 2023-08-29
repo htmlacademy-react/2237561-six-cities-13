@@ -46,7 +46,7 @@ function MainScreen(): JSX.Element {
               <div className="cities__right-section">
                 <Map
                   offers = {offers}
-                  location={offers[0].city.location}
+                  city={offers[0].city}
                   selectedOffer={selectedOfferId}
                   isMainMap
                 />

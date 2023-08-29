@@ -72,7 +72,7 @@ function OfferCard({ offer, cardClass }: TOfferCardProps): JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`${AppRoute.Offer}/${id}`}>{title}</Link>
+          <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

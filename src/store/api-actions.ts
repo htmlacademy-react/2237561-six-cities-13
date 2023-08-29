@@ -31,8 +31,8 @@ export const fetchOfferAction = createAsyncThunk<
     state: TState;
     extra: AxiosInstance;
   }
->(`${NameSpace.Offer}/fetchOffer`, async (offerId, { extra: api }) => {
-  const { data } = await api.get<TFullOffer>(`${APIRoute.Offers}/${offerId}`);
+>(`${NameSpace.Offer}/fetchOffer`, async (id, { extra: api }) => {
+  const { data } = await api.get<TFullOffer>(`${APIRoute.Offers}/${id}`);
   return data;
 });
 
