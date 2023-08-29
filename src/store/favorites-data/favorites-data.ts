@@ -38,7 +38,9 @@ export const favoriteData = createSlice({
         if (action.payload.isFavorite) {
           state.favorites.push(action.payload);
         } else {
-          state.favorites = state.favorites.filter(({id}) => id !== action.payload.id);
+          state.favorites = state.favorites.filter(
+            ({ id }) => id !== action.payload.id
+          );
         }
       })
       .addCase(setFavoritesAction.rejected, (state) => {

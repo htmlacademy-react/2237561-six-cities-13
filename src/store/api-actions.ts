@@ -100,19 +100,26 @@ export const fetchFavoritesAction = createAsyncThunk<
     state: TState;
     extra: AxiosInstance;
   }
->(`${NameSpace.Favorites}/fetchFavoritesAction`, async (_arg, { extra: api }) => {
-  const { data } = await api.get<TOffer[]>(`${APIRoute.Favorites}`);
-  return data;
-});
+>(
+  `${NameSpace.Favorites}/fetchFavoritesAction`,
+  async (_arg, { extra: api }) => {
+    const { data } = await api.get<TOffer[]>(`${APIRoute.Favorites}`);
+    return data;
+  }
+);
 
-export const setFavoritesAction = createAsyncThunk<TOffer, {
-  id: string;
-  status: number;
-}, {
-  dispatch: TAppDispatch;
-  state: TState;
-  extra: AxiosInstance;
-}>(
+export const setFavoritesAction = createAsyncThunk<
+  TOffer,
+  {
+    id: string;
+    status: number;
+  },
+  {
+    dispatch: TAppDispatch;
+    state: TState;
+    extra: AxiosInstance;
+  }
+>(
   `${NameSpace.Favorites}/favoriteStatus`,
   async ({ id, status }, { extra: api }) => {
     const { data } = await api.post<TOffer>(
@@ -125,7 +132,7 @@ export const setFavoritesAction = createAsyncThunk<TOffer, {
 );
 
 export const checkAuthAction = createAsyncThunk<
-TUserData,
+  TUserData,
   undefined,
   {
     dispatch: TAppDispatch;
@@ -138,7 +145,7 @@ TUserData,
 });
 
 export const loginAction = createAsyncThunk<
-TUserData,
+  TUserData,
   AuthData,
   {
     dispatch: TAppDispatch;
@@ -149,14 +156,17 @@ TUserData,
   `${NameSpace.User}/login`,
   async ({ login: email, password }, { dispatch, extra: api }) => {
     try {
-      const {data} = await api.post<TUserData>(APIRoute.Login, {email, password});
+      const { data } = await api.post<TUserData>(APIRoute.Login, {
+        email,
+        password,
+      });
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Main));
       return data;
     } catch {
       throw new Error();
     }
-  },
+  }
 );
 
 export const logoutAction = createAsyncThunk<

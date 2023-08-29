@@ -3,17 +3,13 @@ import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import Header from '../../components/header/header';
 import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
-import {FavoritesList} from '../../components/favorites-list/favorites-list';
-import {
-  getFavorites
-} from '../../store/favorites-data/selectors';
+import { FavoritesList } from '../../components/favorites-list/favorites-list';
+import { getFavorites } from '../../store/favorites-data/selectors';
 import { fetchFavoritesAction } from '../../store/api-actions';
-
 
 export function FavoritesPage(): JSX.Element {
   const offers = useAppSelector(getFavorites);
   const dispatch = useAppDispatch();
-
 
   useEffect(() => {
     dispatch(fetchFavoritesAction());
@@ -30,7 +26,7 @@ export function FavoritesPage(): JSX.Element {
           {offers.length ? (
             <section className="favorites">
               <h1 className="favorites__title">Saved listing</h1>
-              <FavoritesList favorites={offers}/>
+              <FavoritesList favorites={offers} />
             </section>
           ) : (
             <FavoritesEmpty />

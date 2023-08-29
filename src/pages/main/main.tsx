@@ -7,8 +7,12 @@ import MemoCitiesTabs from '../../components/cities-tabs/cities-tabs';
 import MemoOfferCardList from '../../components/offers-card-list/offers-card-list';
 import Spinner from '../../components/spinner/spinner';
 import Map from '../../components/map/map';
-import { getCity, getOffersDataLoading, getOffersData, getSelectedOfferId } from '../../store/offers-data/selectors';
-
+import {
+  getCity,
+  getOffersDataLoading,
+  getOffersData,
+  getSelectedOfferId,
+} from '../../store/offers-data/selectors';
 
 function MainScreen(): JSX.Element {
   const city = useAppSelector(getCity);
@@ -25,27 +29,28 @@ function MainScreen(): JSX.Element {
       <Helmet>
         <title>6 cities - Main</title>
       </Helmet>
-      <Header/>
+      <Header />
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
           <MemoCitiesTabs />
         </div>
         <div className="cities">
-          {!offers.length ? <MainEmpty /> : (
-
+          {!offers.length ? (
+            <MainEmpty />
+          ) : (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
                   {offers.length} places to stay in {city}
                 </b>
-                <MemoOffersListSort/>
-                <MemoOfferCardList offers={offers}/>
+                <MemoOffersListSort />
+                <MemoOfferCardList offers={offers} />
               </section>
               <div className="cities__right-section">
                 <Map
-                  offers = {offers}
+                  offers={offers}
                   city={offers[0].city}
                   selectedOffer={selectedOfferId}
                   isMainMap

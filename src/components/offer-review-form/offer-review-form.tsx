@@ -1,18 +1,24 @@
 import { Fragment, FormEvent, ChangeEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../hooks/index';
 import { postReviewAction } from '../../store/api-actions';
-import { GRADES, MIN_COMMENTS_LENGTH, MAX_COMMENTS_LENGTH, DEFAULT_RATING } from '../../const';
+import {
+  GRADES,
+  MIN_COMMENTS_LENGTH,
+  MAX_COMMENTS_LENGTH,
+  DEFAULT_RATING,
+} from '../../const';
 
 type TReviewFormProps = {
   offerId: string;
-}
+};
 
-function ReviewForm({offerId}: TReviewFormProps): JSX.Element {
+function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
 
-  const isValid = rating !== DEFAULT_RATING &&
+  const isValid =
+    rating !== DEFAULT_RATING &&
     review.length >= MIN_COMMENTS_LENGTH &&
     review.length <= MAX_COMMENTS_LENGTH;
 
@@ -30,19 +36,25 @@ function ReviewForm({offerId}: TReviewFormProps): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(postReviewAction({
-      offerId: offerId,
-      comment: review,
-      rating: rating,
-    }));
+    dispatch(
+      postReviewAction({
+        offerId: offerId,
+        comment: review,
+        rating: rating,
+      })
+    );
 
     setRating(0);
     setReview('');
   };
 
-
   return (
-    <form className="reviews__form form" action="#" method="post" onSubmit={handleFormSubmit}>
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={handleFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>

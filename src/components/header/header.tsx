@@ -1,4 +1,4 @@
-import {AuthorizationStatus } from '../../const';
+import { AuthorizationStatus } from '../../const';
 import SignIn from '../header-sign-in/header-sign-in';
 import SignOut from '../header-sign-out/header-sign-out';
 import Logo from '../../components/logo/logo';

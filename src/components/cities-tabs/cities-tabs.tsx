@@ -39,4 +39,3 @@ function CitiesTabs(): JSX.Element {
 const MemoCitiesTabs = React.memo(CitiesTabs);
 
 export default MemoCitiesTabs;
-

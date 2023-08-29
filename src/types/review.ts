@@ -1,4 +1,4 @@
-import {TUserData} from './user-data';
+import { TUserData } from './user-data';
 
 export type TReview = {
   id: string;
@@ -11,5 +11,4 @@ export type TReview = {
 export type TReviewData = {
   comment: string;
   rating: number;
-}
-
+};

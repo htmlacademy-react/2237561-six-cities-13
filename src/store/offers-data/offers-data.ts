@@ -1,8 +1,7 @@
-import {createSlice, PayloadAction} from '@reduxjs/toolkit';
-import {fetchOffersAction, setFavoritesAction} from '../api-actions';
-import { TOffer} from '../../types/offer';
-import {SortType, NameSpace, DEFAULT_LOCATION} from '../../const';
-
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { fetchOffersAction, setFavoritesAction } from '../api-actions';
+import { TOffer } from '../../types/offer';
+import { SortType, NameSpace, DEFAULT_LOCATION } from '../../const';
 
 export type OffersDataState = {
   city: string;
@@ -34,7 +33,7 @@ export const offersData = createSlice({
     },
     selectOffer: (state, action: PayloadAction<string | null>) => {
       state.selectedOfferId = action.payload;
-    }
+    },
   },
   extraReducers(builder) {
     builder
@@ -51,10 +50,13 @@ export const offersData = createSlice({
         state.hasError = false;
       })
       .addCase(setFavoritesAction.fulfilled, (state, action) => {
-        const currentIndex = state.offers.findIndex((offer) => offer.id === action.payload.id);
-        state.offers[currentIndex].isFavorite = !state.offers[currentIndex].isFavorite;
+        const currentIndex = state.offers.findIndex(
+          (offer) => offer.id === action.payload.id
+        );
+        state.offers[currentIndex].isFavorite =
+          !state.offers[currentIndex].isFavorite;
       });
-  }
+  },
 });
 
-export const {selectCityAction, changeSort, selectOffer} = offersData.actions;
+export const { selectCityAction, changeSort, selectOffer } = offersData.actions;

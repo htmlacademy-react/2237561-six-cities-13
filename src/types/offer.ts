@@ -1,6 +1,6 @@
-import {TUserData} from './user-data';
-import {TLocation} from './location';
-import {TCity} from './city';
+import { TUserData } from './user-data';
+import { TLocation } from './location';
+import { TCity } from './city';
 
 export type TOffer = {
   id: string;
@@ -33,4 +33,10 @@ export type TFullOffer = {
   maxAdults: number;
 };
 
-export type CityName = 'Paris' | 'Cologne' | 'Brussels' | 'Amsterdam' | 'Hamburg' | 'Dusseldorf';
+export type CityName =
+  | 'Paris'
+  | 'Cologne'
+  | 'Brussels'
+  | 'Amsterdam'
+  | 'Hamburg'
+  | 'Dusseldorf';
