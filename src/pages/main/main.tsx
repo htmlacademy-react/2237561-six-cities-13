@@ -1,27 +1,28 @@
-import { useState } from 'react';
 import { Helmet } from 'react-helmet-async';
-import cn from 'classnames';
 import { useAppSelector } from '../../hooks/index';
 import MainEmpty from '../../components/main-empty/main-empty';
-import OffersListSort from '../../components/offer-list-sort/offers-list-sort';
+import MemoOffersListSort from '../../components/offer-list-sort/offers-list-sort';
 import Header from '../../components/header/header';
-import CitiesTabsSort from '../../components/cities-tabs/cities-tabs';
-import OfferCardList from '../../components/offers-card-list/offers-card-list';
+import MemoCitiesTabs from '../../components/cities-tabs/cities-tabs';
+import MemoOfferCardList from '../../components/offers-card-list/offers-card-list';
+import Spinner from '../../components/spinner/spinner';
 import Map from '../../components/map/map';
-import { TSorting } from '../../types/sorting';
+import {
+  getCity,
+  getOffersDataLoading,
+  getOffersData,
+  getSelectedOfferId,
+} from '../../store/offers-data/selectors';
 
 function MainScreen(): JSX.Element {
-  const offers = useAppSelector((state) => state.offers);
-  const activeCity = useAppSelector((state) => state.activeCity);
-  const cityOffers = offers.filter((offer) => offer.city.name === activeCity.name);
+  const city = useAppSelector(getCity);
+  const selectedOfferId = useAppSelector(getSelectedOfferId);
+  const isOffersDataLoading = useAppSelector(getOffersDataLoading);
+  const offers = useAppSelector(getOffersData);
 
-  const [activeSorting, setActiveSorting] = useState<TSorting>('Popular');
-
-  const [activeCardId, setActiveCardId] = useState<string | null>(null);
-
-  const onCardHover = (id: string | null) => {
-    setActiveCardId(id);
-  };
+  if (isOffersDataLoading) {
+    return <Spinner />;
+  }
 
   return (
     <div className="page page--gray page--main">
@@ -29,40 +30,29 @@ function MainScreen(): JSX.Element {
         <title>6 cities - Main</title>
       </Helmet>
       <Header />
-      <main
-        className={cn('page__main', 'page__main--index', {
-          'page__main--index-empty': !cityOffers.length,
-        })}
-      >
+      <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <div className="tabs">
-          <CitiesTabsSort />
+          <MemoCitiesTabs />
         </div>
         <div className="cities">
-          {!cityOffers.length && <MainEmpty />}
-          {!!cityOffers.length && (
+          {!offers.length ? (
+            <MainEmpty />
+          ) : (
             <div className="cities__places-container container">
               <section className="cities__places places">
                 <h2 className="visually-hidden">Places</h2>
                 <b className="places__found">
-                  {cityOffers.length} places to stay in {activeCity.name}
+                  {offers.length} places to stay in {city}
                 </b>
-                <OffersListSort
-                  activeSorting= {activeSorting}
-                  onChange={(newSorting) => setActiveSorting(newSorting)}
-                />
-                <OfferCardList
-                  offers={cityOffers}
-                  onCardHover={onCardHover}
-                  isMainOfferList
-                  activeSorting= {activeSorting}
-                />
+                <MemoOffersListSort />
+                <MemoOfferCardList offers={offers} />
               </section>
               <div className="cities__right-section">
                 <Map
-                  location={cityOffers[0].city.location}
-                  offers={cityOffers}
-                  selectedOffer={activeCardId}
+                  offers={offers}
+                  city={offers[0].city}
+                  selectedOffer={selectedOfferId}
                   isMainMap
                 />
               </div>

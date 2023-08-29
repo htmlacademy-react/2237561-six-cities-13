@@ -1,30 +1,21 @@
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { TOffer } from '../../types/offer';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import Header from '../../components/header/header';
-import FavoriteCard from '../../components/favorite-card/favorite-card';
+import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
+import { FavoritesList } from '../../components/favorites-list/favorites-list';
+import { getFavorites } from '../../store/favorites-data/selectors';
+import { fetchFavoritesAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
 
-type TFavoritesPageProps = {
-  offers: TOffer[];
-};
+export function FavoritesPage(): JSX.Element {
+  const offers = useAppSelector(getFavorites);
+  const dispatch = useAppDispatch();
 
-type OffersByLocationsGroup = {
-  [city: string]: TOffer[];
-};
-
-const getOffersByLocationGroup = (offers: TOffer[]) =>
-  offers.reduce((cityGroup: OffersByLocationsGroup, offer) => {
-    const city = offer.city.name;
-
-    if (!cityGroup[city]) {
-      cityGroup[city] = [];
-    }
-    cityGroup[city].push(offer);
-
-    return cityGroup;
-  }, {});
-
-export function FavoritesPage({ offers }: TFavoritesPageProps): JSX.Element {
-  const offersByLocation = getOffersByLocationGroup(offers);
+  useEffect(() => {
+    dispatch(fetchFavoritesAction());
+  }, [dispatch]);
 
   return (
     <div className="page">
@@ -34,31 +25,18 @@ export function FavoritesPage({ offers }: TFavoritesPageProps): JSX.Element {
       <Header />
       <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
-          <section className="favorites">
-            <h1 className="favorites__title">Saved listing</h1>
-            <ul className="favorites__list">
-              {Object.entries(offersByLocation).map(([city]) => (
-                <li className="favorites__locations-items" key={city}>
-                  <div className="favorites__locations locations locations--current">
-                    <div className="locations__item">
-                      <a className="locations__item-link" href="#">
-                        <span>{city}</span>
-                      </a>
-                    </div>
-                  </div>
-                  <div className="favorites__places">
-                    {offers.map((offer) => (
-                      <FavoriteCard key={offer.id} offer={offer} />
-                    ))}
-                  </div>
-                </li>
-              ))}
-            </ul>
-          </section>
+          {offers.length ? (
+            <section className="favorites">
+              <h1 className="favorites__title">Saved listing</h1>
+              <FavoritesList favorites={offers} />
+            </section>
+          ) : (
+            <FavoritesEmpty />
+          )}
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -66,7 +44,7 @@ export function FavoritesPage({ offers }: TFavoritesPageProps): JSX.Element {
             width={64}
             height={33}
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );

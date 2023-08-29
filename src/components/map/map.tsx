@@ -1,63 +1,60 @@
 import {useRef, useEffect} from 'react';
-import leaflet from 'leaflet';
+import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import cn from 'classnames';
 
 import useMap from '../../hooks/useMap';
-import {TLocation} from '../../types/location';
+import {TCity} from '../../types/city';
 import {TOffer} from '../../types/offer';
 
 type TMapProps = {
-  location: TLocation;
+  city: TCity;
   offers: TOffer[];
   selectedOffer: string | null;
   isMainMap?: boolean;
 }
 
-const defaultMarkerIcon = leaflet.icon({
+const defaultMarkerIcon = new Icon({
   iconUrl: './img/pin.svg',
   iconSize: [27, 39],
   iconAnchor: [14, 40]
 });
 
-const activeMarkerIcon = leaflet.icon({
+const activeMarkerIcon = new Icon({
   iconUrl: './img/pin-active.svg',
   iconSize: [27, 39],
   iconAnchor: [14, 40]
 });
 
-export default function Map({location, offers, selectedOffer, isMainMap}: TMapProps): JSX.Element {
+export default function Map({city, offers, selectedOffer, isMainMap}: TMapProps): JSX.Element {
   const mapRef = useRef(null);
-  const map = useMap(mapRef, location);
+  const map = useMap(mapRef, city);
 
   useEffect(() => {
     if (map) {
-      const markerGroup = leaflet.layerGroup().addTo(map);
+      const {latitude, longitude, zoom} = city.location;
+      map.setView([latitude, longitude], zoom);
+      const markerGroup = layerGroup().addTo(map);
 
-      map.setView(
-        {
-          lat: location.latitude,
-          lng: location.longitude
-        },
-        location.zoom
-      );
       offers.forEach((offer) => {
-        leaflet
-          .marker(
-            {
-              lat: offer.location.latitude,
-              lng: offer.location.longitude
-            },
-            {
-              icon: (selectedOffer !== null && offer.id === selectedOffer)
-                ? activeMarkerIcon
-                : defaultMarkerIcon
-            }
+        const marker = new Marker({
+          lat: offer.location.latitude,
+          lng: offer.location.longitude,
+        });
+
+        marker
+          .setIcon(
+            selectedOffer !== undefined && selectedOffer === offer.id
+              ? activeMarkerIcon
+              : defaultMarkerIcon
           )
           .addTo(markerGroup);
       });
+      return () => {
+        map.removeLayer(markerGroup);
+      };
     }
-  }, [map, location, offers, selectedOffer]);
+  }, [city.location, map, offers, selectedOffer]);
 
   return (
     <section

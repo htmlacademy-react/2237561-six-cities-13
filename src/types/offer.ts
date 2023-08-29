@@ -1,6 +1,6 @@
-import {TUser} from './user';
-import {TLocation} from './location';
-import {TCity} from './city';
+import { TUserData } from './user-data';
+import { TLocation } from './location';
+import { TCity } from './city';
 
 export type TOffer = {
   id: string;
@@ -12,7 +12,7 @@ export type TOffer = {
   isFavorite: boolean;
   isPremium: boolean;
   rating: number;
-  previewImage: string;
+  previewImage?: string;
 };
 
 export type TFullOffer = {
@@ -25,10 +25,18 @@ export type TFullOffer = {
   city: TCity;
   location: TLocation;
   goods: string[];
-  host: TUser;
+  host: TUserData;
   isPremium: boolean;
   isFavorite: boolean;
   rating: number;
   bedrooms: number;
   maxAdults: number;
 };
+
+export type CityName =
+  | 'Paris'
+  | 'Cologne'
+  | 'Brussels'
+  | 'Amsterdam'
+  | 'Hamburg'
+  | 'Dusseldorf';

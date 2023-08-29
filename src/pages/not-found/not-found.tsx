@@ -21,10 +21,10 @@ function NotFoundScreen(): JSX.Element {
                 height="100%"
                 style={{ textAlign: 'center', marginTop: '15%' }}
               />
-              <p className = {styles.text}>
-                Вернуться на {' '}
+              <p className={styles.text}>
+                Вернуться на{' '}
                 <Link to={AppRoute.Main} className={styles.link}>
-                главную
+                  главную
                 </Link>
               </p>
             </div>
