@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
@@ -6,6 +7,7 @@ import FavoritesEmpty from '../../components/favorites-empty/favorites-empty';
 import { FavoritesList } from '../../components/favorites-list/favorites-list';
 import { getFavorites } from '../../store/favorites-data/selectors';
 import { fetchFavoritesAction } from '../../store/api-actions';
+import { AppRoute } from '../../const';
 
 export function FavoritesPage(): JSX.Element {
   const offers = useAppSelector(getFavorites);
@@ -34,7 +36,7 @@ export function FavoritesPage(): JSX.Element {
         </div>
       </main>
       <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
+        <Link className="footer__logo-link" to={AppRoute.Main}>
           <img
             className="footer__logo"
             src="img/logo.svg"
@@ -42,7 +44,7 @@ export function FavoritesPage(): JSX.Element {
             width={64}
             height={33}
           />
-        </a>
+        </Link>
       </footer>
     </div>
   );
