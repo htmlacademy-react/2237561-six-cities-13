@@ -1,9 +1,10 @@
-.text {
-  text-align: center;
-  margin-top: 50px;
-  font-size: 20px;
+.wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
 }
 
-.link {
-  color:#6495ed;
- }
+.icon404 {
+  max-width: 50%;
+}
