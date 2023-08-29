@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import OfferCard from '../../components/offer-card/offer-card';
+import MemoOfferCard from '../../components/offer-card/offer-card';
 import { AppRoute, CardClass } from '../../const';
 import { TOffer } from '../../types/offer';
 
@@ -32,7 +32,7 @@ export const FavoritesList = ({ favorites }: TFavoritesListProps) => {
           </div>
           <div className="favorites__places">
             {favorites.filter((item) => item.city.name === cityName).map((item) => (
-              <OfferCard
+              <MemoOfferCard
                 key={item.id}
                 offer={item}
                 cardClass={CardClass.FAVORITES}

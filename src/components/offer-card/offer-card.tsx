@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { TOffer } from '../../types/offer';
 import { AppRoute, RATING_COEF } from '../../const';
-import FavoriteBookmarkButton from '../favorite-bookmark/favorite-bookmark';
+import MemoFavoriteBookmarkButton from '../favorite-bookmark/favorite-bookmark';
 import { selectOffer } from '../../store/offers-data/offers-data';
 import { useAppDispatch } from '../../hooks/index';
 
@@ -59,7 +59,7 @@ function OfferCard({ offer, cardClass }: TOfferCardProps): JSX.Element {
             <b className="place-card__price-value">&euro;{price}</b>
             <span className="place-card__price-text">&#47;&nbsp;night</span>
           </div>
-          <FavoriteBookmarkButton
+          <MemoFavoriteBookmarkButton
             offerId={id}
             isFavorite={isFavorite}
             isBigSize={false}
