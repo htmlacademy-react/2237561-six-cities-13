@@ -12,6 +12,7 @@ import {
   AuthorizationStatus,
   CardClass,
   MAX_NEAR_PLACES_COUNT,
+  TypeOfHousing,
 } from '../../const';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
@@ -125,7 +126,7 @@ function OfferPage(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {type}
+                  {TypeOfHousing[type]}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {bedrooms} Bedroom{bedrooms > 1 ? 's' : ''}

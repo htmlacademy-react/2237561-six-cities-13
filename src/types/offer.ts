@@ -1,3 +1,7 @@
+import {
+  TypeOfHousing,
+} from '../const';
+
 import { TUserData } from './user-data';
 import { TLocation } from './location';
 import { TCity } from './city';
@@ -19,7 +23,7 @@ export type TFullOffer = {
   id: string;
   title: string;
   description: string;
-  type: string;
+  type: keyof typeof TypeOfHousing;
   price: number;
   images: string[];
   city: TCity;

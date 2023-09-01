@@ -2,7 +2,7 @@ import React from 'react';
 import { MouseEvent, useEffect } from 'react';
 import cn from 'classnames';
 import { Link } from 'react-router-dom';
-import { AppRoute, DEFFAULT_IMG_AVATAR } from '../../const';
+import { AppRoute, DEFAULT_IMG_AVATAR } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { logoutAction, fetchFavoritesAction } from '../../store/api-actions';
 import { getUserName } from '../../store/user-process/selectors';
@@ -33,7 +33,7 @@ function SignOut(): JSX.Element {
             className={cn('header__avatar-wrapper', 'user__avatar-wrapper')}
             style={{
               backgroundImage: `url(${
-                userData?.avatarUrl ?? DEFFAULT_IMG_AVATAR
+                userData?.avatarUrl ?? DEFAULT_IMG_AVATAR
               })`,
             }}
           >

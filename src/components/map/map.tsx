@@ -3,7 +3,7 @@ import {Icon, Marker, layerGroup} from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import cn from 'classnames';
 
-import useMap from '../../hooks/useMap';
+import useMap from '../../hooks/use-map';
 import {TCity} from '../../types/city';
 import {TOffer} from '../../types/offer';
 

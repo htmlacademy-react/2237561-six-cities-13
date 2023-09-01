@@ -2,9 +2,7 @@ import { Fragment, FormEvent, ChangeEventHandler, useState } from 'react';
 import { useAppDispatch } from '../../hooks/index';
 import { postReviewAction } from '../../store/api-actions';
 import {
-  GRADES,
-  MIN_COMMENTS_LENGTH,
-  MAX_COMMENTS_LENGTH,
+  GRADES, ReviewLength,
   DEFAULT_RATING,
 } from '../../const';
 
@@ -19,8 +17,8 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
 
   const isValid =
     rating !== DEFAULT_RATING &&
-    review.length >= MIN_COMMENTS_LENGTH &&
-    review.length <= MAX_COMMENTS_LENGTH;
+    review.length >= ReviewLength.Min &&
+    review.length <= ReviewLength.Max;
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target,
@@ -100,7 +98,7 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
           <span className="reviews__star">rating</span> and describe your stay
           with at least{' '}
           <b className="reviews__text-amount">
-            {MIN_COMMENTS_LENGTH} characters
+            {ReviewLength.Min} characters
           </b>
           .
         </p>

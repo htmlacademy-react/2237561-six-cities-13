@@ -8,9 +8,6 @@ export const GRADES: string[] = [
 
 export const RATING_COEF = 20;
 
-export const MIN_COMMENTS_LENGTH = 50;
-export const MAX_COMMENTS_LENGTH = 300;
-
 export const REVIEW_LIMIT = 10;
 
 export const DEFAULT_LOCATION = {
@@ -29,7 +26,7 @@ export const MAX_REVIEWS_COUNT = 10;
 
 export const DEFAULT_RATING = 0;
 
-export const DEFFAULT_IMG_AVATAR = './img/avatar.svg';
+export const DEFAULT_IMG_AVATAR = './img/avatar.svg';
 
 export const CITIES = [
   {
@@ -104,6 +101,13 @@ export enum SortType {
   TopRated = 'Top rated first',
 }
 
+export enum TypeOfHousing {
+  apartment = 'Apartment',
+  room = 'Private Room',
+  house = 'House',
+  hotel = 'Hotel'
+}
+
 export enum NameSpace {
   Offers = 'OFFERS',
   Offer = 'OFFER',
@@ -126,6 +130,10 @@ export const enum RequestStatus {
   Pending = 'PENDING',
   Success = 'SUCCESS',
   Error = 'ERROR',
+}
+export enum ReviewLength {
+  Min = 50,
+  Max = 300,
 }
 
 export const CardClass = {
