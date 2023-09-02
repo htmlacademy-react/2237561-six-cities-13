@@ -26,6 +26,8 @@ export const DEFAULT_RATING = 0;
 
 export const DEFAULT_IMG_AVATAR = './img/avatar.svg';
 
+export const OFFER_IMAGES_MAX_COUNT = 6;
+
 export const CITIES = [
   {
     location: {

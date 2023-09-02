@@ -12,6 +12,7 @@ import {
   AuthorizationStatus,
   CardClass,
   MAX_NEAR_PLACES_COUNT,
+  OFFER_IMAGES_MAX_COUNT,
   TypeOfHousing,
 } from '../../const';
 import Map from '../../components/map/map';
@@ -86,7 +87,7 @@ function OfferPage(): JSX.Element {
           <div className="offer__gallery-container container">
             <div className="offer__gallery">
               {currentOffer &&
-                currentOffer.images.map((item) => (
+                currentOffer.images.slice(0, OFFER_IMAGES_MAX_COUNT).map((item) => (
                   <div className="offer__image-wrapper" key={item}>
                     <img
                       className="offer__image"
