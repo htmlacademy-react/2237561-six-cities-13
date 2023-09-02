@@ -59,8 +59,6 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
         })
       );
     }
-    setRating(0);
-    setReview('');
   };
 
   return (
