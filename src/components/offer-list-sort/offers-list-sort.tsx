@@ -39,10 +39,15 @@ export function OffersListSort(): JSX.Element {
           <use xlinkHref="#icon-arrow-select"></use>
         </svg>
       </span>
+      { isOpened &&
       <ul
         className={cn('places__options', 'places__options--custom', {
           'places__options--opened': isOpened,
         })}
+        onMouseLeave = {() => setIsOpened(false)}
+        onClick={() => {
+          setIsOpened((option) => !option);
+        }}
       >
         {Object.entries(SortType).map(([key, label]) => (
           <li
@@ -56,7 +61,7 @@ export function OffersListSort(): JSX.Element {
             {label}
           </li>
         ))}
-      </ul>
+      </ul>}
     </form>
   );
 }
