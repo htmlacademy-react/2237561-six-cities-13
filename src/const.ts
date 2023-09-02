@@ -20,8 +20,6 @@ export const DEFAULT_LOCATION = {
 };
 export const MAX_NEAR_PLACES_COUNT = 3;
 
-export const TIMEOUT_SHOW_ERROR = 2000;
-
 export const MAX_REVIEWS_COUNT = 10;
 
 export const DEFAULT_RATING = 0;
