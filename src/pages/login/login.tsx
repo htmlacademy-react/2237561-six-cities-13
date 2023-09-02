@@ -1,27 +1,62 @@
 import { Link } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
-import { useRef, FormEvent } from 'react';
-import { useAppDispatch } from '../../hooks/index';
+import { useRef, FormEvent, useEffect, useState } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { loginAction } from '../../store/api-actions';
-import { AppRoute } from '../../const';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute, AuthorizationStatus, Status } from '../../const';
 import Logo from '../../components/logo/logo';
+import { getLoginStatus, getAuthorizationStatus } from '../../store/user-process/selectors';
+import { setLoginStatus } from '../../store/user-process/user-process';
+import loginStyles from './login.module.css';
 
 function LoginScreen(): JSX.Element {
+  const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+  const regexPassword = /^(?=.*\d)(?=.*[a-z])\S*$/i;
+  const regexLogin = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+  const loginStatus = useAppSelector(getLoginStatus);
+  const authStatus = useAppSelector(getAuthorizationStatus);
 
-  const dispatch = useAppDispatch();
+  const [isCorrectLogin, setIsCorrectLogin] = useState(true);
+  const [isCorrectPassword, setIsCorrectPassword] = useState(true);
+
+  useEffect(() => {
+    if (authStatus === AuthorizationStatus.Auth) {
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [authStatus, dispatch]);
+
+  useEffect(() => {
+    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+      dispatch(setLoginStatus(Status.Idle));
+      loginRef.current.value = '';
+      passwordRef.current.value = '';
+      dispatch(redirectToRoute(AppRoute.Main));
+    }
+  }, [dispatch, loginStatus]);
 
   const handleSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setIsCorrectLogin(true);
+    setIsCorrectPassword(true);
 
-    if (loginRef.current !== null && passwordRef.current !== null) {
-      dispatch(
-        loginAction({
-          login: loginRef.current.value,
-          password: passwordRef.current.value,
-        })
-      );
+    if (loginRef.current && passwordRef.current) {
+      if (!regexPassword.test(passwordRef.current.value)) {
+        setIsCorrectPassword(false);
+        return;
+      }
+
+      if (!regexLogin.test(loginRef.current.value)) {
+        setIsCorrectLogin(false);
+        return;
+      }
+
+      dispatch(loginAction({
+        login: loginRef.current.value,
+        password: passwordRef.current.value
+      }));
     }
   };
 
@@ -46,7 +81,7 @@ function LoginScreen(): JSX.Element {
             <h1 className="login__title">Sign in</h1>
             <form
               className="login__form form"
-              action="#"
+              action=""
               method="post"
               onSubmit={handleSubmit}
             >
@@ -60,6 +95,7 @@ function LoginScreen(): JSX.Element {
                   placeholder="Email"
                   required
                 />
+                {!isCorrectLogin && <p className={loginStyles.login__error}>Enter a valid email</p>}
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -71,6 +107,10 @@ function LoginScreen(): JSX.Element {
                   placeholder="Password"
                   required
                 />
+                {!isCorrectPassword &&
+                  <p className={loginStyles.password__error}>
+                    At least 1 letter and 1 number without spaces
+                  </p>}
               </div>
               <button
                 className="login__submit form__submit button"

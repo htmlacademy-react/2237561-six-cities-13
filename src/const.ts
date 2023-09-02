@@ -123,15 +123,23 @@ export enum APIRoute {
   Logout = '/logout',
 }
 
-export const enum RequestStatus {
+export enum RequestStatus {
   Unsent = 'UNSENT',
   Pending = 'PENDING',
   Success = 'SUCCESS',
   Error = 'ERROR',
 }
+
 export enum ReviewLength {
   Min = 50,
   Max = 300,
+}
+
+export enum Status {
+  Idle = 'Idle',
+  Loading = 'Loading',
+  Success = 'Success',
+  Error = 'Error'
 }
 
 export const CardClass = {
