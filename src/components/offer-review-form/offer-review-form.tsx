@@ -1,10 +1,14 @@
-import { Fragment, FormEvent, ChangeEventHandler, useState } from 'react';
-import { useAppDispatch } from '../../hooks/index';
+import { Fragment, FormEvent, ChangeEventHandler, useState, useEffect, useRef } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { postReviewAction } from '../../store/api-actions';
 import {
-  GRADES, ReviewLength,
+  GRADES,
+  ReviewLength,
   DEFAULT_RATING,
+  Status
 } from '../../const';
+import { getReviewStatus } from '../../store/offer-data/selectors';
+import { setReviewStatus } from '../../store/offer-data/offer-data';
 
 type TReviewFormProps = {
   offerId: string;
@@ -12,13 +16,25 @@ type TReviewFormProps = {
 
 function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
+  const formRef = useRef<HTMLFormElement | null>(null);
   const [review, setReview] = useState('');
   const [rating, setRating] = useState(0);
+
+  const postReviewStatus = useAppSelector(getReviewStatus);
 
   const isValid =
     rating !== DEFAULT_RATING &&
     review.length >= ReviewLength.Min &&
     review.length <= ReviewLength.Max;
+
+  useEffect(() => {
+    if (postReviewStatus === Status.Success && formRef) {
+      dispatch(setReviewStatus(Status.Idle));
+      setRating(0);
+      setReview('');
+    }
+  }, [dispatch, postReviewStatus]);
+
 
   const handleInputChange: ChangeEventHandler<HTMLInputElement> = ({
     target,
@@ -34,14 +50,15 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
 
   const handleFormSubmit = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    dispatch(
-      postReviewAction({
-        offerId: offerId,
-        comment: review,
-        rating: rating,
-      })
-    );
-
+    if (isValid) {
+      dispatch(
+        postReviewAction({
+          offerId: offerId,
+          comment: review,
+          rating: rating,
+        })
+      );
+    }
     setRating(0);
     setReview('');
   };
@@ -69,6 +86,7 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
                 type="radio"
                 checked={Number(rating) === gradeValue}
                 onChange={handleInputChange}
+                disabled={postReviewStatus === Status.Loading}
               />
               <label
                 className="reviews__rating-label form__rating-label"
@@ -90,6 +108,7 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
         placeholder="Tell how was your stay, what you like and what can be improved"
         value={review}
         onChange={handleTexAreaChange}
+        disabled={postReviewStatus === Status.Loading}
       >
       </textarea>
       <div className="reviews__button-wrapper">
@@ -105,9 +124,9 @@ function ReviewForm({ offerId }: TReviewFormProps): JSX.Element {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled={!isValid}
+          disabled={!isValid || postReviewStatus === Status.Loading}
         >
-          Submit
+          {postReviewStatus === Status.Loading ? 'In process...' : 'Submit'}
         </button>
       </div>
     </form>

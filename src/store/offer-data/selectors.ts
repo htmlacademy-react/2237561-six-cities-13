@@ -1,4 +1,4 @@
-import { NameSpace } from '../../const';
+import { NameSpace, Status } from '../../const';
 import { TOffer, TFullOffer } from '../../types/offer';
 import { TReview } from '../../types/review';
 import { TState } from '../../types/state';
@@ -11,5 +11,7 @@ const getOfferDataLoading = (state: TState): boolean =>
   state[NameSpace.Offer].isOfferDataLoading;
 const getReviews = (state: TState): TReview[] | null =>
   state[NameSpace.Offer].reviews;
+const getReviewStatus = (state: TState): Status =>
+  state[NameSpace.Offer].status;
 
-export { getOffer, getNearOffers, getOfferDataLoading, getReviews };
+export { getOffer, getNearOffers, getOfferDataLoading, getReviews, getReviewStatus };
