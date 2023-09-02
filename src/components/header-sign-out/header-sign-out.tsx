@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { AppRoute, DEFAULT_IMG_AVATAR } from '../../const';
 import { useAppDispatch, useAppSelector } from '../../hooks/index';
 import { logoutAction, fetchFavoritesAction } from '../../store/api-actions';
-import { getUserName } from '../../store/user-process/selectors';
+import { getUserData } from '../../store/user-process/selectors';
 import { getFavoritesCount } from '../../store/favorites-data/selectors';
 
 function SignOut(): JSX.Element {
   const dispatch = useAppDispatch();
-  const userData = useAppSelector(getUserName);
+  const userData = useAppSelector(getUserData);
   const favoritesCount = useAppSelector(getFavoritesCount);
 
   useEffect(() => {

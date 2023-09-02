@@ -8,5 +8,5 @@ export const getAuthorizationStatus = (state: TState): AuthorizationStatus =>
 export const getAuthCheckedStatus = (state: TState): boolean =>
   state[NameSpace.User].authStatus !== AuthorizationStatus.NoAuth;
 
-export const getUserName = (state: TState): TUserData | null =>
+export const getUserData = (state: TState): TUserData | null =>
   state[NameSpace.User].userData;
