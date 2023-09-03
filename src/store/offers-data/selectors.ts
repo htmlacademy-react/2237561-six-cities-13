@@ -1,6 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { NameSpace, SortType } from '../../const';
-import { TOffer } from '../../types/offer';
 import { TState } from '../../types/state';
 import {
   sortByRating,
@@ -23,14 +22,6 @@ const getServerErrorStatus = (state: TState): boolean =>
   state[NameSpace.Offers].hasError;
 const getSort = (state: TState): SortType => state[NameSpace.Offers].sortType;
 
-const getOffersByCity = (state: TState): TOffer[] =>
-  state[NameSpace.Offers].offers.filter(
-    (offer) => offer.city.name === state[NameSpace.Offers].city
-  );
-const getListCity = (state: TState): string[] =>
-  Array.from(
-    new Set(state[NameSpace.Offers].offers.map((item) => item.city.name))
-  );
 const getSelectedOfferId = (state: TState): string | null =>
   state[NameSpace.Offers].selectedOfferId;
 
@@ -46,8 +37,6 @@ export {
   getOffersDataLoading,
   getServerErrorStatus,
   getSort,
-  getOffersByCity,
-  getListCity,
   getSelectedOfferId,
   getOffersData,
 };

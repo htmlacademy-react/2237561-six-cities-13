@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import {
   fetchOfferAction,
   fetchNearPlacesAction,
@@ -6,15 +6,17 @@ import {
   postReviewAction,
   setFavoritesAction,
 } from '../api-actions';
-import { NameSpace } from '../../const';
+import { NameSpace, Status } from '../../const';
 import { TOffer, TFullOffer } from '../../types/offer';
 import { TReview } from '../../types/review';
+import { toast } from 'react-toastify';
 
 export type OfferDataState = {
   isOfferDataLoading: boolean;
   offerItem: TFullOffer | null;
   nearOffers: TOffer[];
   reviews: TReview[];
+  status: Status;
 };
 
 const initialState: OfferDataState = {
@@ -22,6 +24,7 @@ const initialState: OfferDataState = {
   offerItem: null,
   nearOffers: [],
   reviews: [],
+  status: Status.Idle,
 };
 
 export const offerData = createSlice({
@@ -31,6 +34,9 @@ export const offerData = createSlice({
     dropOffer: (state) => {
       state.offerItem = null;
       state.nearOffers = [];
+    },
+    setReviewStatus: (state, action: PayloadAction<Status>) => {
+      state.status = action.payload;
     },
   },
   extraReducers(builder) {
@@ -53,6 +59,14 @@ export const offerData = createSlice({
       })
       .addCase(postReviewAction.fulfilled, (state, action) => {
         state.reviews.push(action.payload);
+        state.status = Status.Success;
+      })
+      .addCase(postReviewAction.pending, (state) => {
+        state.status = Status.Loading;
+      })
+      .addCase(postReviewAction.rejected, (state) => {
+        state.status = Status.Error;
+        toast.warn('Failed to post comment. Please, try again later');
       })
       .addCase(setFavoritesAction.fulfilled, (state, action) => {
         state.nearOffers.forEach((offer) => {
@@ -67,4 +81,4 @@ export const offerData = createSlice({
       });
   },
 });
-export const { dropOffer } = offerData.actions;
+export const { dropOffer, setReviewStatus } = offerData.actions;

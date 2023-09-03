@@ -7,8 +7,3 @@ export type TReview = {
   comment: string;
   date: string;
 };
-
-export type TReviewData = {
-  comment: string;
-  rating: number;
-};

@@ -139,7 +139,7 @@ export const checkAuthAction = createAsyncThunk<
     state: TState;
     extra: AxiosInstance;
   }
->(`${NameSpace.User}/checkAuth`, async (_arg, { extra: api }) => {
+>(`${NameSpace.User}/checkAuth`, async (_arg, {extra: api }) => {
   const { data } = await api.get<TUserData>(APIRoute.Login);
   return data;
 });
@@ -162,6 +162,8 @@ export const loginAction = createAsyncThunk<
       });
       saveToken(data.token);
       dispatch(redirectToRoute(AppRoute.Main));
+      dispatch(fetchOffersAction());
+      dispatch(fetchFavoritesAction());
       return data;
     } catch {
       throw new Error();
@@ -177,7 +179,8 @@ export const logoutAction = createAsyncThunk<
     state: TState;
     extra: AxiosInstance;
   }
->(`${NameSpace.User}/logout`, async (_arg, { extra: api }) => {
+>(`${NameSpace.User}/logout`, async (_arg, {dispatch, extra: api }) => {
   await api.delete(APIRoute.Logout);
+  dispatch(fetchOffersAction());
   dropToken();
 });
