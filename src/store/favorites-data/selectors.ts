@@ -7,6 +7,3 @@ export const getFavorites = (state: TState): TOffer[] =>
 
 export const getFavoritesCount = (state: TState): number =>
   state[NameSpace.Favorites].favorites.length;
-
-export const getSetStatus = (state: TState): boolean | null =>
-  state[NameSpace.Favorites].setStatus;

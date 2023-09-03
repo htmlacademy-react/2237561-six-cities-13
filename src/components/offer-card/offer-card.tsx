@@ -5,6 +5,7 @@ import { AppRoute, RATING_COEF } from '../../const';
 import FavoriteBookmarkButton from '../favorite-bookmark/favorite-bookmark';
 import { selectOffer } from '../../store/offers-data/offers-data';
 import { useAppDispatch } from '../../hooks/index';
+import { capitalize } from '../../utils/common';
 
 type TCardClass = {
   name: string;
@@ -74,7 +75,7 @@ function OfferCard({ offer, cardClass }: TOfferCardProps): JSX.Element {
         <h2 className="place-card__name">
           <Link to={`${AppRoute.Offer}${id}`}>{title}</Link>
         </h2>
-        <p className="place-card__type">{type}</p>
+        <p className="place-card__type">{capitalize(type)}</p>
       </div>
     </article>
   );

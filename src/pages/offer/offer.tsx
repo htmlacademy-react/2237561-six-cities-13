@@ -13,7 +13,6 @@ import {
   CardClass,
   MAX_NEAR_PLACES_COUNT,
   OFFER_IMAGES_MAX_COUNT,
-  TypeOfHousing,
 } from '../../const';
 import Map from '../../components/map/map';
 import { useAppSelector, useAppDispatch } from '../../hooks/index';
@@ -31,6 +30,7 @@ import {
 } from '../../store/offer-data/selectors';
 import { getAuthorizationStatus } from '../../store/user-process/selectors';
 import NotFoundScreen from '../not-found/not-found';
+import { capitalize } from '../../utils/common';
 
 function OfferPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -127,7 +127,7 @@ function OfferPage(): JSX.Element {
               </div>
               <ul className="offer__features">
                 <li className="offer__feature offer__feature--entire">
-                  {TypeOfHousing[type]}
+                  {capitalize(type)}
                 </li>
                 <li className="offer__feature offer__feature--bedrooms">
                   {bedrooms} Bedroom{bedrooms > 1 ? 's' : ''}

@@ -110,13 +110,6 @@ export enum SortType {
   TopRated = 'Top rated first',
 }
 
-export enum TypeOfHousing {
-  apartment = 'Apartment',
-  room = 'Private Room',
-  house = 'House',
-  hotel = 'Hotel'
-}
-
 export enum NameSpace {
   Offers = 'OFFERS',
   Offer = 'OFFER',
@@ -132,13 +125,6 @@ export enum APIRoute {
   Reviews = '/comments',
   Login = '/login',
   Logout = '/logout',
-}
-
-export enum RequestStatus {
-  Unsent = 'UNSENT',
-  Pending = 'PENDING',
-  Success = 'SUCCESS',
-  Error = 'ERROR',
 }
 
 export enum ReviewLength {
