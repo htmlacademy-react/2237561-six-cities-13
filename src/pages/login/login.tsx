@@ -6,21 +6,28 @@ import { loginAction } from '../../store/api-actions';
 import { redirectToRoute } from '../../store/action';
 import { AppRoute, AuthorizationStatus, Status } from '../../const';
 import Logo from '../../components/logo/logo';
-import { getLoginStatus, getAuthorizationStatus } from '../../store/user-process/selectors';
+import {
+  getLoginStatus,
+  getAuthorizationStatus,
+} from '../../store/user-process/selectors';
 import { setLoginStatus } from '../../store/user-process/user-process';
+import { selectCityAction } from '../../store/offers-data/offers-data';
 import loginStyles from './login.module.css';
+import { getRandomCity } from '../../utils/common';
 
 function LoginScreen(): JSX.Element {
   const dispatch = useAppDispatch();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
   const regexPassword = /^(?=.*\d)(?=.*[a-z])\S*$/i;
-  const regexLogin = /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
+  const regexLogin =
+    /^(([^<>()\\[\]\\.,;:\s@"]+(\.[^<>()\\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/i;
   const loginStatus = useAppSelector(getLoginStatus);
   const authStatus = useAppSelector(getAuthorizationStatus);
 
   const [isCorrectLogin, setIsCorrectLogin] = useState(true);
   const [isCorrectPassword, setIsCorrectPassword] = useState(true);
+  const randomCity = getRandomCity();
 
   useEffect(() => {
     if (authStatus === AuthorizationStatus.Auth) {
@@ -29,7 +36,11 @@ function LoginScreen(): JSX.Element {
   }, [authStatus, dispatch]);
 
   useEffect(() => {
-    if (loginStatus === Status.Success && loginRef.current && passwordRef.current) {
+    if (
+      loginStatus === Status.Success &&
+      loginRef.current &&
+      passwordRef.current
+    ) {
       dispatch(setLoginStatus(Status.Idle));
       loginRef.current.value = '';
       passwordRef.current.value = '';
@@ -53,10 +64,12 @@ function LoginScreen(): JSX.Element {
         return;
       }
 
-      dispatch(loginAction({
-        login: loginRef.current.value,
-        password: passwordRef.current.value
-      }));
+      dispatch(
+        loginAction({
+          login: loginRef.current.value,
+          password: passwordRef.current.value,
+        })
+      );
     }
   };
 
@@ -95,7 +108,11 @@ function LoginScreen(): JSX.Element {
                   placeholder="Email"
                   required
                 />
-                {!isCorrectLogin && <p className={loginStyles.login__error}>Enter a valid email</p>}
+                {!isCorrectLogin && (
+                  <p className={loginStyles.login__error}>
+                    Enter a valid email
+                  </p>
+                )}
               </div>
               <div className="login__input-wrapper form__input-wrapper">
                 <label className="visually-hidden">Password</label>
@@ -107,10 +124,11 @@ function LoginScreen(): JSX.Element {
                   placeholder="Password"
                   required
                 />
-                {!isCorrectPassword &&
+                {!isCorrectPassword && (
                   <p className={loginStyles.password__error}>
                     At least 1 letter and 1 number without spaces
-                  </p>}
+                  </p>
+                )}
               </div>
               <button
                 className="login__submit form__submit button"
@@ -122,8 +140,13 @@ function LoginScreen(): JSX.Element {
           </section>
           <section className="locations locations--login locations--current">
             <div className="locations__item">
-              <Link className="locations__item-link" to={AppRoute.Main}>
-                <span>Paris</span>
+              <Link className="locations__item-link"
+                to={AppRoute.Main}
+                onClick={() => {
+                  dispatch(selectCityAction(randomCity));
+                }}
+              >
+                <span>{randomCity}</span>
               </Link>
             </div>
           </section>

@@ -28,6 +28,15 @@ export const DEFAULT_IMG_AVATAR = './img/avatar.svg';
 
 export const OFFER_IMAGES_MAX_COUNT = 6;
 
+export const CITIES_LIST = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 export const CITIES = [
   {
     location: {
